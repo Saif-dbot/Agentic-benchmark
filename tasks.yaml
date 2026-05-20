@@ -1,0 +1,51 @@
+# Tâches exemples pour le benchmark
+- id: T1
+  title: Horaire mairie locale
+  type: info_lookup
+  prompt: "Trouve l'horaire d'ouverture de la mairie de Lyon et cite la source."
+  expected_format: text
+- id: T2
+  title: Définition technique
+  type: definition
+  prompt: "Donne la définition simple du terme 'RAG' et un exemple d'utilisation."
+  expected_format: text
+- id: T3
+  title: Résumé court
+  type: summarization
+  prompt: "Résume en 2 phrases le texte suivant : {text}."
+  expected_format: text
+- id: T4
+  title: Conversion d'unités
+  type: computation
+  prompt: "Convertis 10 km en miles et montre le calcul."
+  expected_format: text
+- id: T5
+  title: Numéro officiel
+  type: info_lookup
+  prompt: "Trouve le numéro de contact officiel pour les urgences sanitaires en France et cite la source."
+  expected_format: text
+- id: T6
+  title: Problème mathématique
+  type: reasoning
+  prompt: "Résous : Si 3x + 5 = 20, quel est x ? Montre les étapes."
+  expected_format: text
+- id: T7
+  title: Comparaison de sources
+  type: comparison
+  prompt: "Compare deux articles sur le même fait et indique lequel semble le plus fiable, en justifiant. URLs: {url1}, {url2}."
+  expected_format: text
+- id: T8
+  title: Q depuis corpus
+  type: retrieval
+  prompt: "En te basant sur les 3 documents fournis, réponds à : {question}."
+  expected_format: text
+- id: T9
+  title: Planification simple
+  type: planning
+  prompt: "Propose un planning en 5 étapes pour organiser une petite conférence d'une journée."
+  expected_format: text
+- id: T10
+  title: Multi-agent simple
+  type: multi_agent
+  prompt: "Agent A collecte les faits, agent B vérifie, agent C synthétise : coopérez pour donner une synthèse sur le thème X."
+  expected_format: text

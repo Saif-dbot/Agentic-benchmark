@@ -1,0 +1,64 @@
+# Prompts prêts à l'emploi par tâche et par framework
+# {framework} peut être LangChain, CrewAI, AutoGen, LlamaIndex
+
+T1:
+  LangChain: "Trouve l'horaire d'ouverture de la mairie de Lyon et fournis la source en une phrase."
+  CrewAI: "(Role: Chercheur) Recherche l'horaire d'ouverture de la mairie de Lyon. (Role: Vérificateur) Vérifie la fiabilité de la source et renvoie la source."
+  AutoGen: "Collaborez entre agents pour trouver l'horaire d'ouverture de la mairie de Lyon, vérifiez la source et retournez une synthèse." 
+  LlamaIndex: "À partir du corpus web indexé, donne l'horaire d'ouverture de la mairie de Lyon et cite la page exacte."
+
+T2:
+  LangChain: "Explique simplement ce que signifie 'RAG' et donne un exemple d'application."
+  CrewAI: "(Chercheur) Définis RAG; (Expliqueur) Donne un exemple simple et concret."
+  AutoGen: "Agents: expliquez RAG en termes simples et fournissez un exemple d'usage collaboratif."
+  LlamaIndex: "À partir des documents indexés, résume la définition de RAG et fournis un exemple." 
+
+T3:
+  LangChain: "Résume en deux phrases le texte suivant : {text}."
+  CrewAI: "(Synthétiseur) Lis le texte et fournis un résumé clair en deux phrases."
+  AutoGen: "Agent A extrait les points importants, Agent B rédige un résumé de deux phrases."
+  LlamaIndex: "Utilise l'index documentaire pour produire un résumé de deux phrases du passage donné."
+
+T4:
+  LangChain: "Convertis 10 km en miles et montre le calcul."
+  CrewAI: "(Calculateur) Effectue la conversion 10 km -> miles et montre les étapes de calcul."
+  AutoGen: "Un agent calcule la conversion et un second vérifie les étapes. Fournissez la réponse finale."
+  LlamaIndex: "Non applicable (simple calcul). Utilisez prompt de base : Convertis 10 km en miles et montre le calcul."
+
+T5:
+  LangChain: "Trouve le numéro d'urgence sanitaire en France et cite la source officielle."
+  CrewAI: "(Chercheur) Recherche le numéro; (Vérificateur) Confirme la source officielle puis renvoie."
+  AutoGen: "Coordonnez pour obtenir le numéro d'urgence sanitaire français et fournissez la source."
+  LlamaIndex: "À partir du corpus indexé, retrouve le numéro d'urgence sanitaire et indique la source."
+
+# Prompts pour T6..T10
+T6:
+  LangChain: "Résous : Si 3x + 5 = 20, quel est x ? Montre les étapes clairement."
+  CrewAI: "(Calculateur) Résous l'équation 3x + 5 = 20 en détaillant chaque étape."
+  AutoGen: "Agent A propose une solution, Agent B vérifie les étapes; retournez la solution finale et la vérification."
+  LlamaIndex: "(non applicable) Utilisez le prompt de base pour résoudre l'équation et montrer les étapes."
+
+T7:
+  LangChain: "Compare deux articles et indique lequel semble plus fiable en justifiant (URLs: {url1}, {url2})."
+  CrewAI: "(Chercheur) Analyse chaque URL; (Vérificateur) Donne un verdict sur la fiabilité avec justification."
+  AutoGen: "Agents: A extrait les preuves de chaque article, B évalue la crédibilité, C synthétise le verdict."
+  LlamaIndex: "À partir des documents indexés, compare les positions et indique la source la plus fiable."
+
+T8:
+  LangChain: "En te basant sur les 3 documents fournis, réponds à : {question}. Indique quelles phrases du corpus supportent la réponse."
+  CrewAI: "(Collecteur) Récupère les passages pertinents; (Synthétiseur) Rédige la réponse en citant les passages."
+  AutoGen: "Agents coopèrent pour extraire les passages et rédiger une réponse sourcée."
+  LlamaIndex: "Interroge l'index documentaire et fournis la réponse avec références aux documents."
+
+T9:
+  LangChain: "Propose un planning en 5 étapes pour organiser une petite conférence d'une journée."
+  CrewAI: "(Planificateur) Propose 5 étapes ; (Vérificateur) Vérifie la cohérence temporelle et les contraintes."
+  AutoGen: "Agent A propose le planning, Agent B vérifie les contraintes, Agent C finalise et formate."
+  LlamaIndex: "Non spécifique au corpus: utilisez le prompt de base pour produire le planning."
+
+T10:
+  LangChain: "Coordonnez trois agents: A collecte des faits sur le thème X, B vérifie la validité, C synthétise en une page. Donnez la synthèse."
+  CrewAI: "Définissez les rôles puis exécutez la coopération: A, B, C. Retournez la synthèse et les preuves."
+  AutoGen: "Simulez une conversation multi-agent où A, B, C accomplissent les tâches décrites et produisent une synthèse conjointe."
+  LlamaIndex: "Si X est dans le corpus, récupérer les passages pertinents et produire la synthèse avec références."
+# Les tâches T6..T10 peuvent suivre le même schéma ; vous pouvez dupliquer/adapter si nécessaire.
