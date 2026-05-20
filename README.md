@@ -12,6 +12,7 @@ Comparer de manière systématique plusieurs frameworks d'agents IA, notamment L
 
 - [Sujet.md](Sujet.md) : sujet initial du projet.
 - [Protocole_de_recherche.md](Protocole_de_recherche.md) : cadre méthodologique et critères d'évaluation.
+- [Guide_de_realisation.md](Guide_de_realisation.md) : feuille de route détaillée pour réaliser le projet.
 - [Principes_pour_debutants.md](Principes_pour_debutants.md) : version simplifiée pour prise en main.
 - [tasks.yaml](tasks.yaml) : liste des tâches de benchmark.
 - [prompts.yaml](prompts.yaml) : prompts associés aux expériences.

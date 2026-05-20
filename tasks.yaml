@@ -1,51 +1,744 @@
-# Tâches exemples pour le benchmark
-- id: T1
-  title: Horaire mairie locale
+- id: T001
+  title: Recherche d'information - Niveau 1 - Cas 01
   type: info_lookup
-  prompt: "Trouve l'horaire d'ouverture de la mairie de Lyon et cite la source."
+  prompt: '[Categorie: Recherche d''information] [Niveau: 1] trouve l''information
+    demandee pour le scenario 1 et indique une source fiable.'
   expected_format: text
-- id: T2
-  title: Définition technique
-  type: definition
-  prompt: "Donne la définition simple du terme 'RAG' et un exemple d'utilisation."
-  expected_format: text
-- id: T3
-  title: Résumé court
-  type: summarization
-  prompt: "Résume en 2 phrases le texte suivant : {text}."
-  expected_format: text
-- id: T4
-  title: Conversion d'unités
-  type: computation
-  prompt: "Convertis 10 km en miles et montre le calcul."
-  expected_format: text
-- id: T5
-  title: Numéro officiel
+- id: T002
+  title: Recherche d'information - Niveau 2 - Cas 02
   type: info_lookup
-  prompt: "Trouve le numéro de contact officiel pour les urgences sanitaires en France et cite la source."
+  prompt: '[Categorie: Recherche d''information] [Niveau: 2] trouve l''information
+    demandee pour le scenario 2 et indique une source fiable.'
   expected_format: text
-- id: T6
-  title: Problème mathématique
-  type: reasoning
-  prompt: "Résous : Si 3x + 5 = 20, quel est x ? Montre les étapes."
+- id: T003
+  title: Recherche d'information - Niveau 3 - Cas 03
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 3] trouve l''information
+    demandee pour le scenario 3 et indique une source fiable.'
   expected_format: text
-- id: T7
-  title: Comparaison de sources
-  type: comparison
-  prompt: "Compare deux articles sur le même fait et indique lequel semble le plus fiable, en justifiant. URLs: {url1}, {url2}."
+- id: T004
+  title: Recherche d'information - Niveau 4 - Cas 04
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 4] trouve l''information
+    demandee pour le scenario 4 et indique une source fiable.'
   expected_format: text
-- id: T8
-  title: Q depuis corpus
+- id: T005
+  title: Recherche d'information - Niveau 5 - Cas 05
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 5] trouve l''information
+    demandee pour le scenario 5 et indique une source fiable.'
+  expected_format: text
+- id: T006
+  title: Recherche d'information - Niveau 1 - Cas 06
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 1] trouve l''information
+    demandee pour le scenario 6 et indique une source fiable.'
+  expected_format: text
+- id: T007
+  title: Recherche d'information - Niveau 2 - Cas 07
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 2] trouve l''information
+    demandee pour le scenario 7 et indique une source fiable.'
+  expected_format: text
+- id: T008
+  title: Recherche d'information - Niveau 3 - Cas 08
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 3] trouve l''information
+    demandee pour le scenario 8 et indique une source fiable.'
+  expected_format: text
+- id: T009
+  title: Recherche d'information - Niveau 4 - Cas 09
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 4] trouve l''information
+    demandee pour le scenario 9 et indique une source fiable.'
+  expected_format: text
+- id: T010
+  title: Recherche d'information - Niveau 5 - Cas 10
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 5] trouve l''information
+    demandee pour le scenario 10 et indique une source fiable.'
+  expected_format: text
+- id: T011
+  title: Recherche d'information - Niveau 1 - Cas 11
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 1] trouve l''information
+    demandee pour le scenario 11 et indique une source fiable.'
+  expected_format: text
+- id: T012
+  title: Recherche d'information - Niveau 2 - Cas 12
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 2] trouve l''information
+    demandee pour le scenario 12 et indique une source fiable.'
+  expected_format: text
+- id: T013
+  title: Recherche d'information - Niveau 3 - Cas 13
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 3] trouve l''information
+    demandee pour le scenario 13 et indique une source fiable.'
+  expected_format: text
+- id: T014
+  title: Recherche d'information - Niveau 4 - Cas 14
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 4] trouve l''information
+    demandee pour le scenario 14 et indique une source fiable.'
+  expected_format: text
+- id: T015
+  title: Recherche d'information - Niveau 5 - Cas 15
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 5] trouve l''information
+    demandee pour le scenario 15 et indique une source fiable.'
+  expected_format: text
+- id: T016
+  title: Recherche d'information - Niveau 1 - Cas 16
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 1] trouve l''information
+    demandee pour le scenario 16 et indique une source fiable.'
+  expected_format: text
+- id: T017
+  title: Recherche d'information - Niveau 2 - Cas 17
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 2] trouve l''information
+    demandee pour le scenario 17 et indique une source fiable.'
+  expected_format: text
+- id: T018
+  title: Recherche d'information - Niveau 3 - Cas 18
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 3] trouve l''information
+    demandee pour le scenario 18 et indique une source fiable.'
+  expected_format: text
+- id: T019
+  title: Recherche d'information - Niveau 4 - Cas 19
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 4] trouve l''information
+    demandee pour le scenario 19 et indique une source fiable.'
+  expected_format: text
+- id: T020
+  title: Recherche d'information - Niveau 5 - Cas 20
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 5] trouve l''information
+    demandee pour le scenario 20 et indique une source fiable.'
+  expected_format: text
+- id: T021
+  title: Recherche d'information - Niveau 1 - Cas 21
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 1] trouve l''information
+    demandee pour le scenario 21 et indique une source fiable.'
+  expected_format: text
+- id: T022
+  title: Recherche d'information - Niveau 2 - Cas 22
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 2] trouve l''information
+    demandee pour le scenario 22 et indique une source fiable.'
+  expected_format: text
+- id: T023
+  title: Recherche d'information - Niveau 3 - Cas 23
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 3] trouve l''information
+    demandee pour le scenario 23 et indique une source fiable.'
+  expected_format: text
+- id: T024
+  title: Recherche d'information - Niveau 4 - Cas 24
+  type: info_lookup
+  prompt: '[Categorie: Recherche d''information] [Niveau: 4] trouve l''information
+    demandee pour le scenario 24 et indique une source fiable.'
+  expected_format: text
+- id: T025
+  title: Raisonnement sequentiel - Niveau 1 - Cas 01
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 1] resous le probleme en
+    etapes ordonnees pour le scenario 1 et donne le resultat final.'
+  expected_format: text
+- id: T026
+  title: Raisonnement sequentiel - Niveau 2 - Cas 02
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 2] resous le probleme en
+    etapes ordonnees pour le scenario 2 et donne le resultat final.'
+  expected_format: text
+- id: T027
+  title: Raisonnement sequentiel - Niveau 3 - Cas 03
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 3] resous le probleme en
+    etapes ordonnees pour le scenario 3 et donne le resultat final.'
+  expected_format: text
+- id: T028
+  title: Raisonnement sequentiel - Niveau 4 - Cas 04
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 4] resous le probleme en
+    etapes ordonnees pour le scenario 4 et donne le resultat final.'
+  expected_format: text
+- id: T029
+  title: Raisonnement sequentiel - Niveau 5 - Cas 05
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 5] resous le probleme en
+    etapes ordonnees pour le scenario 5 et donne le resultat final.'
+  expected_format: text
+- id: T030
+  title: Raisonnement sequentiel - Niveau 1 - Cas 06
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 1] resous le probleme en
+    etapes ordonnees pour le scenario 6 et donne le resultat final.'
+  expected_format: text
+- id: T031
+  title: Raisonnement sequentiel - Niveau 2 - Cas 07
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 2] resous le probleme en
+    etapes ordonnees pour le scenario 7 et donne le resultat final.'
+  expected_format: text
+- id: T032
+  title: Raisonnement sequentiel - Niveau 3 - Cas 08
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 3] resous le probleme en
+    etapes ordonnees pour le scenario 8 et donne le resultat final.'
+  expected_format: text
+- id: T033
+  title: Raisonnement sequentiel - Niveau 4 - Cas 09
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 4] resous le probleme en
+    etapes ordonnees pour le scenario 9 et donne le resultat final.'
+  expected_format: text
+- id: T034
+  title: Raisonnement sequentiel - Niveau 5 - Cas 10
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 5] resous le probleme en
+    etapes ordonnees pour le scenario 10 et donne le resultat final.'
+  expected_format: text
+- id: T035
+  title: Raisonnement sequentiel - Niveau 1 - Cas 11
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 1] resous le probleme en
+    etapes ordonnees pour le scenario 11 et donne le resultat final.'
+  expected_format: text
+- id: T036
+  title: Raisonnement sequentiel - Niveau 2 - Cas 12
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 2] resous le probleme en
+    etapes ordonnees pour le scenario 12 et donne le resultat final.'
+  expected_format: text
+- id: T037
+  title: Raisonnement sequentiel - Niveau 3 - Cas 13
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 3] resous le probleme en
+    etapes ordonnees pour le scenario 13 et donne le resultat final.'
+  expected_format: text
+- id: T038
+  title: Raisonnement sequentiel - Niveau 4 - Cas 14
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 4] resous le probleme en
+    etapes ordonnees pour le scenario 14 et donne le resultat final.'
+  expected_format: text
+- id: T039
+  title: Raisonnement sequentiel - Niveau 5 - Cas 15
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 5] resous le probleme en
+    etapes ordonnees pour le scenario 15 et donne le resultat final.'
+  expected_format: text
+- id: T040
+  title: Raisonnement sequentiel - Niveau 1 - Cas 16
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 1] resous le probleme en
+    etapes ordonnees pour le scenario 16 et donne le resultat final.'
+  expected_format: text
+- id: T041
+  title: Raisonnement sequentiel - Niveau 2 - Cas 17
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 2] resous le probleme en
+    etapes ordonnees pour le scenario 17 et donne le resultat final.'
+  expected_format: text
+- id: T042
+  title: Raisonnement sequentiel - Niveau 3 - Cas 18
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 3] resous le probleme en
+    etapes ordonnees pour le scenario 18 et donne le resultat final.'
+  expected_format: text
+- id: T043
+  title: Raisonnement sequentiel - Niveau 4 - Cas 19
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 4] resous le probleme en
+    etapes ordonnees pour le scenario 19 et donne le resultat final.'
+  expected_format: text
+- id: T044
+  title: Raisonnement sequentiel - Niveau 5 - Cas 20
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 5] resous le probleme en
+    etapes ordonnees pour le scenario 20 et donne le resultat final.'
+  expected_format: text
+- id: T045
+  title: Raisonnement sequentiel - Niveau 1 - Cas 21
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 1] resous le probleme en
+    etapes ordonnees pour le scenario 21 et donne le resultat final.'
+  expected_format: text
+- id: T046
+  title: Raisonnement sequentiel - Niveau 2 - Cas 22
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 2] resous le probleme en
+    etapes ordonnees pour le scenario 22 et donne le resultat final.'
+  expected_format: text
+- id: T047
+  title: Raisonnement sequentiel - Niveau 3 - Cas 23
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 3] resous le probleme en
+    etapes ordonnees pour le scenario 23 et donne le resultat final.'
+  expected_format: text
+- id: T048
+  title: Raisonnement sequentiel - Niveau 4 - Cas 24
+  type: reasoning_sequential
+  prompt: '[Categorie: Raisonnement sequentiel] [Niveau: 4] resous le probleme en
+    etapes ordonnees pour le scenario 24 et donne le resultat final.'
+  expected_format: text
+- id: T049
+  title: Recuperation documentaire - Niveau 1 - Cas 01
   type: retrieval
-  prompt: "En te basant sur les 3 documents fournis, réponds à : {question}."
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 1] reponds a la question
+    du scenario 1 a partir des documents fournis et cite les passages utiles.'
   expected_format: text
-- id: T9
-  title: Planification simple
-  type: planning
-  prompt: "Propose un planning en 5 étapes pour organiser une petite conférence d'une journée."
+- id: T050
+  title: Recuperation documentaire - Niveau 2 - Cas 02
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 2] reponds a la question
+    du scenario 2 a partir des documents fournis et cite les passages utiles.'
   expected_format: text
-- id: T10
-  title: Multi-agent simple
+- id: T051
+  title: Recuperation documentaire - Niveau 3 - Cas 03
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 3] reponds a la question
+    du scenario 3 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T052
+  title: Recuperation documentaire - Niveau 4 - Cas 04
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 4] reponds a la question
+    du scenario 4 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T053
+  title: Recuperation documentaire - Niveau 5 - Cas 05
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 5] reponds a la question
+    du scenario 5 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T054
+  title: Recuperation documentaire - Niveau 1 - Cas 06
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 1] reponds a la question
+    du scenario 6 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T055
+  title: Recuperation documentaire - Niveau 2 - Cas 07
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 2] reponds a la question
+    du scenario 7 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T056
+  title: Recuperation documentaire - Niveau 3 - Cas 08
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 3] reponds a la question
+    du scenario 8 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T057
+  title: Recuperation documentaire - Niveau 4 - Cas 09
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 4] reponds a la question
+    du scenario 9 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T058
+  title: Recuperation documentaire - Niveau 5 - Cas 10
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 5] reponds a la question
+    du scenario 10 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T059
+  title: Recuperation documentaire - Niveau 1 - Cas 11
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 1] reponds a la question
+    du scenario 11 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T060
+  title: Recuperation documentaire - Niveau 2 - Cas 12
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 2] reponds a la question
+    du scenario 12 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T061
+  title: Recuperation documentaire - Niveau 3 - Cas 13
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 3] reponds a la question
+    du scenario 13 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T062
+  title: Recuperation documentaire - Niveau 4 - Cas 14
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 4] reponds a la question
+    du scenario 14 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T063
+  title: Recuperation documentaire - Niveau 5 - Cas 15
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 5] reponds a la question
+    du scenario 15 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T064
+  title: Recuperation documentaire - Niveau 1 - Cas 16
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 1] reponds a la question
+    du scenario 16 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T065
+  title: Recuperation documentaire - Niveau 2 - Cas 17
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 2] reponds a la question
+    du scenario 17 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T066
+  title: Recuperation documentaire - Niveau 3 - Cas 18
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 3] reponds a la question
+    du scenario 18 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T067
+  title: Recuperation documentaire - Niveau 4 - Cas 19
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 4] reponds a la question
+    du scenario 19 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T068
+  title: Recuperation documentaire - Niveau 5 - Cas 20
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 5] reponds a la question
+    du scenario 20 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T069
+  title: Recuperation documentaire - Niveau 1 - Cas 21
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 1] reponds a la question
+    du scenario 21 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T070
+  title: Recuperation documentaire - Niveau 2 - Cas 22
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 2] reponds a la question
+    du scenario 22 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T071
+  title: Recuperation documentaire - Niveau 3 - Cas 23
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 3] reponds a la question
+    du scenario 23 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T072
+  title: Recuperation documentaire - Niveau 4 - Cas 24
+  type: retrieval
+  prompt: '[Categorie: Recuperation documentaire] [Niveau: 4] reponds a la question
+    du scenario 24 a partir des documents fournis et cite les passages utiles.'
+  expected_format: text
+- id: T073
+  title: Collaboration multi-agent - Niveau 1 - Cas 01
   type: multi_agent
-  prompt: "Agent A collecte les faits, agent B vérifie, agent C synthétise : coopérez pour donner une synthèse sur le thème X."
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 1] coordonne trois agents
+    pour le scenario 1 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T074
+  title: Collaboration multi-agent - Niveau 2 - Cas 02
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 2] coordonne trois agents
+    pour le scenario 2 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T075
+  title: Collaboration multi-agent - Niveau 3 - Cas 03
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 3] coordonne trois agents
+    pour le scenario 3 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T076
+  title: Collaboration multi-agent - Niveau 4 - Cas 04
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 4] coordonne trois agents
+    pour le scenario 4 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T077
+  title: Collaboration multi-agent - Niveau 5 - Cas 05
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 5] coordonne trois agents
+    pour le scenario 5 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T078
+  title: Collaboration multi-agent - Niveau 1 - Cas 06
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 1] coordonne trois agents
+    pour le scenario 6 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T079
+  title: Collaboration multi-agent - Niveau 2 - Cas 07
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 2] coordonne trois agents
+    pour le scenario 7 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T080
+  title: Collaboration multi-agent - Niveau 3 - Cas 08
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 3] coordonne trois agents
+    pour le scenario 8 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T081
+  title: Collaboration multi-agent - Niveau 4 - Cas 09
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 4] coordonne trois agents
+    pour le scenario 9 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T082
+  title: Collaboration multi-agent - Niveau 5 - Cas 10
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 5] coordonne trois agents
+    pour le scenario 10 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T083
+  title: Collaboration multi-agent - Niveau 1 - Cas 11
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 1] coordonne trois agents
+    pour le scenario 11 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T084
+  title: Collaboration multi-agent - Niveau 2 - Cas 12
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 2] coordonne trois agents
+    pour le scenario 12 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T085
+  title: Collaboration multi-agent - Niveau 3 - Cas 13
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 3] coordonne trois agents
+    pour le scenario 13 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T086
+  title: Collaboration multi-agent - Niveau 4 - Cas 14
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 4] coordonne trois agents
+    pour le scenario 14 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T087
+  title: Collaboration multi-agent - Niveau 5 - Cas 15
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 5] coordonne trois agents
+    pour le scenario 15 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T088
+  title: Collaboration multi-agent - Niveau 1 - Cas 16
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 1] coordonne trois agents
+    pour le scenario 16 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T089
+  title: Collaboration multi-agent - Niveau 2 - Cas 17
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 2] coordonne trois agents
+    pour le scenario 17 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T090
+  title: Collaboration multi-agent - Niveau 3 - Cas 18
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 3] coordonne trois agents
+    pour le scenario 18 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T091
+  title: Collaboration multi-agent - Niveau 4 - Cas 19
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 4] coordonne trois agents
+    pour le scenario 19 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T092
+  title: Collaboration multi-agent - Niveau 5 - Cas 20
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 5] coordonne trois agents
+    pour le scenario 20 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T093
+  title: Collaboration multi-agent - Niveau 1 - Cas 21
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 1] coordonne trois agents
+    pour le scenario 21 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T094
+  title: Collaboration multi-agent - Niveau 2 - Cas 22
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 2] coordonne trois agents
+    pour le scenario 22 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T095
+  title: Collaboration multi-agent - Niveau 3 - Cas 23
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 3] coordonne trois agents
+    pour le scenario 23 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T096
+  title: Collaboration multi-agent - Niveau 4 - Cas 24
+  type: multi_agent
+  prompt: '[Categorie: Collaboration multi-agent] [Niveau: 4] coordonne trois agents
+    pour le scenario 24 afin de produire une reponse finale unique et coherente.'
+  expected_format: text
+- id: T097
+  title: Erreurs et ambiguite - Niveau 1 - Cas 01
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 1] gere une entree ambigue ou
+    partiellement erronee du scenario 1, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T098
+  title: Erreurs et ambiguite - Niveau 2 - Cas 02
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 2] gere une entree ambigue ou
+    partiellement erronee du scenario 2, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T099
+  title: Erreurs et ambiguite - Niveau 3 - Cas 03
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 3] gere une entree ambigue ou
+    partiellement erronee du scenario 3, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T100
+  title: Erreurs et ambiguite - Niveau 4 - Cas 04
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 4] gere une entree ambigue ou
+    partiellement erronee du scenario 4, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T101
+  title: Erreurs et ambiguite - Niveau 5 - Cas 05
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 5] gere une entree ambigue ou
+    partiellement erronee du scenario 5, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T102
+  title: Erreurs et ambiguite - Niveau 1 - Cas 06
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 1] gere une entree ambigue ou
+    partiellement erronee du scenario 6, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T103
+  title: Erreurs et ambiguite - Niveau 2 - Cas 07
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 2] gere une entree ambigue ou
+    partiellement erronee du scenario 7, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T104
+  title: Erreurs et ambiguite - Niveau 3 - Cas 08
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 3] gere une entree ambigue ou
+    partiellement erronee du scenario 8, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T105
+  title: Erreurs et ambiguite - Niveau 4 - Cas 09
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 4] gere une entree ambigue ou
+    partiellement erronee du scenario 9, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T106
+  title: Erreurs et ambiguite - Niveau 5 - Cas 10
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 5] gere une entree ambigue ou
+    partiellement erronee du scenario 10, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T107
+  title: Erreurs et ambiguite - Niveau 1 - Cas 11
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 1] gere une entree ambigue ou
+    partiellement erronee du scenario 11, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T108
+  title: Erreurs et ambiguite - Niveau 2 - Cas 12
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 2] gere une entree ambigue ou
+    partiellement erronee du scenario 12, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T109
+  title: Erreurs et ambiguite - Niveau 3 - Cas 13
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 3] gere une entree ambigue ou
+    partiellement erronee du scenario 13, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T110
+  title: Erreurs et ambiguite - Niveau 4 - Cas 14
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 4] gere une entree ambigue ou
+    partiellement erronee du scenario 14, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T111
+  title: Erreurs et ambiguite - Niveau 5 - Cas 15
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 5] gere une entree ambigue ou
+    partiellement erronee du scenario 15, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T112
+  title: Erreurs et ambiguite - Niveau 1 - Cas 16
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 1] gere une entree ambigue ou
+    partiellement erronee du scenario 16, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T113
+  title: Erreurs et ambiguite - Niveau 2 - Cas 17
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 2] gere une entree ambigue ou
+    partiellement erronee du scenario 17, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T114
+  title: Erreurs et ambiguite - Niveau 3 - Cas 18
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 3] gere une entree ambigue ou
+    partiellement erronee du scenario 18, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T115
+  title: Erreurs et ambiguite - Niveau 4 - Cas 19
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 4] gere une entree ambigue ou
+    partiellement erronee du scenario 19, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T116
+  title: Erreurs et ambiguite - Niveau 5 - Cas 20
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 5] gere une entree ambigue ou
+    partiellement erronee du scenario 20, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T117
+  title: Erreurs et ambiguite - Niveau 1 - Cas 21
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 1] gere une entree ambigue ou
+    partiellement erronee du scenario 21, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T118
+  title: Erreurs et ambiguite - Niveau 2 - Cas 22
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 2] gere une entree ambigue ou
+    partiellement erronee du scenario 22, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T119
+  title: Erreurs et ambiguite - Niveau 3 - Cas 23
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 3] gere une entree ambigue ou
+    partiellement erronee du scenario 23, clarifie les hypotheses et propose une reponse
+    robuste.'
+  expected_format: text
+- id: T120
+  title: Erreurs et ambiguite - Niveau 4 - Cas 24
+  type: error_ambiguity
+  prompt: '[Categorie: Erreurs et ambiguite] [Niveau: 4] gere une entree ambigue ou
+    partiellement erronee du scenario 24, clarifie les hypotheses et propose une reponse
+    robuste.'
   expected_format: text

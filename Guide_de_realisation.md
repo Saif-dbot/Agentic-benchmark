@@ -68,11 +68,13 @@ pip install -r requirements.txt
 ```
 **Checklist technique :**
 
-- [ ] Créer l'environnement virtuel avec `python -m venv .venv`
-- [ ] Activer l'environnement
-- [ ] Vérifier que pip est à jour avec `pip --version`
-- [ ] Installer les dépendances avec `pip install -r requirements.txt`
-- [ ] Tester les imports: `python -c "import langchain; import crewai; import pyautogen; import llama_index"`
+- [x] Créer l'environnement virtuel avec `python -m venv .venv`
+- [x] Activer l'environnement
+- [x] Vérifier que pip est à jour avec `pip --version`
+- [x] Installer les dépendances avec `pip install -r requirements.txt`
+- [x] Tester les imports: `python -c "import langchain; import crewai; import pyautogen; import llama_index"`
+
+Statut au 2026-05-20 : environnement `.venv` opérationnel, dépendances `requirements.txt` installées et vérifiées.
 ### 3.2 Vérification du projet
 
 Les fichiers de référence du dépôt sont :
@@ -86,12 +88,14 @@ Les fichiers de référence du dépôt sont :
 
 **Checklist technique :**
 
-- [ ] Vérifier que `Sujet.md` contient le sujet académique complet
-- [ ] Vérifier que `Protocole_de_recherche.md` est cohérent
-- [ ] Lister les tâches existantes dans `tasks.yaml`
-- [ ] Vérifier que `prompts.yaml` a des prompts pour au moins 10 tâches
-- [ ] Vérifier que `config_example.json` est un modèle valide
-- [ ] Vérifier que `run_all.py` existe et est exécutable
+- [x] Vérifier que `Sujet.md` contient le sujet académique complet
+- [x] Vérifier que `Protocole_de_recherche.md` est cohérent
+- [x] Lister les tâches existantes dans `tasks.yaml`
+- [x] Vérifier que `prompts.yaml` a des prompts pour au moins 10 tâches
+- [x] Vérifier que `config_example.json` est un modèle valide
+- [x] Vérifier que `run_all.py` existe et est exécutable
+
+Prochaine étape immédiate : démarrer la Phase 2 (structure des adaptateurs) avec un socle minimal exécutable.
 
 ## 4. Intégration des API des agents
 
@@ -144,11 +148,11 @@ Pour le sujet actuel, il est conseillé de garder une configuration unique par c
 
 **Checklist technique :**
 
-- [ ] Créer `config.json` (local, non versionné) à partir de `config_example.json`
-- [ ] Définir le fournisseur LLM (ex: openai, anthropic, azure)
+- [x] Créer `config.json` (local, non versionné) à partir de `config_example.json`
+- [x] Définir le fournisseur LLM (ex: openai, anthropic, azure)
 - [ ] Ajouter la clé API à la variable d'environnement (ne pas l'écrire en dur)
-- [ ] Tester la connexion: `python -c "from adapters.config import load_config; cfg=load_config(); print(cfg)"`
-- [ ] Documenter la clé API attendue dans le `.gitignore` ou un fichier de secrets
+- [x] Tester la connexion: `python -c "from adapters.config import load_config; cfg=load_config(); print(cfg)"`
+- [x] Documenter la clé API attendue dans le `.gitignore` ou un fichier de secrets
 
 ### 4.3 Variables d'environnement
 
@@ -189,15 +193,15 @@ Structure de sortie recommandée :
 
 **Checklist technique :**
 
-- [ ] Créer le dossier `adapters/` à la racine
-- [ ] Implémenter `adapters/base_adapter.py` avec l'interface commune
-- [ ] Implémenter `adapters/langchain_adapter.py`
-- [ ] Implémenter `adapters/crewai_adapter.py`
-- [ ] Implémenter `adapters/autogen_adapter.py`
-- [ ] Implémenter `adapters/llamaindex_adapter.py`
-- [ ] Tester chaque adaptateur sur une tâche simple: `python test_adapters.py`
-- [ ] Vérifier que tous les adaptateurs retournent le même schéma JSON
-- [ ] Vérifier que chaque adaptateur peut mesurer: latency, error, tool_calls, response
+- [x] Créer le dossier `adapters/` à la racine
+- [x] Implémenter `adapters/base_adapter.py` avec l'interface commune
+- [x] Implémenter `adapters/langchain_adapter.py`
+- [x] Implémenter `adapters/crewai_adapter.py`
+- [x] Implémenter `adapters/autogen_adapter.py`
+- [x] Implémenter `adapters/llamaindex_adapter.py`
+- [x] Tester chaque adaptateur sur une tâche simple: `python test_adapters.py`
+- [x] Vérifier que tous les adaptateurs retournent le même schéma JSON
+- [x] Vérifier que chaque adaptateur peut mesurer: latency, error, tool_calls, response
 
 ### 4.5 Intégration par framework
 
@@ -261,9 +265,9 @@ Le sujet impose une lecture comparative et reproductible. Le guide doit donc con
 
 **Checklist technique :**
 
-- [ ] Créer un fichier `metrics.py` qui définit les axes d'évaluation
-- [ ] Ajouter un logging JSON structuré pour chaque métrique
-- [ ] Tester que chaque adaptateur loggue correctement
+- [x] Créer un fichier `metrics.py` qui définit les axes d'évaluation
+- [x] Ajouter un logging JSON structuré pour chaque métrique
+- [x] Tester que chaque adaptateur loggue correctement
 
 ### 4.7 Pont commun entre frameworks
 
@@ -279,10 +283,10 @@ Cela permet une comparaison plus juste.
 
 **Checklist technique :**
 
-- [ ] Créer une classe `BenchmarkRunner` qui orchestre les adaptateurs
-- [ ] Implémenter un système de logs JSON commun
-- [ ] Créer un fichier `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
-- [ ] Tester: `python benchmark.py --framework langchain --repeats 1 --task T1`
+- [x] Créer une classe `BenchmarkRunner` qui orchestre les adaptateurs
+- [x] Implémenter un système de logs JSON commun
+- [x] Créer un fichier `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
+- [x] Tester: `python benchmark.py --framework langchain --repeats 1 --task T1`
 
 ## 5. Préparer les tâches et les prompts
 
@@ -300,16 +304,16 @@ Le nombre cible est de 120 tâches réparties sur 5 niveaux de difficulté.
 
 **Checklist technique :**
 
-- [ ] Étendre `tasks.yaml` à 120 tâches (24 par catégorie * 5 niveaux)
-- [ ] Créer des tâches dans les 5 catégories:
-  - [ ] Recherche d'information (24 tâches)
-  - [ ] Raisonnement séquentiel (24 tâches)
-  - [ ] Récupération documentaire (24 tâches)
-  - [ ] Multi-agent (24 tâches)
-  - [ ] Erreurs et ambiguïtés (24 tâches)
-- [ ] Pour chaque tâche T_i, créer des prompts dans `prompts.yaml` pour les 4 frameworks
-- [ ] Valider que chaque prompt est coherent et testable
-- [ ] Créer un script `validate_tasks.py` pour vérifier la cohérence
+- [x] Étendre `tasks.yaml` à 120 tâches (24 par catégorie * 5 niveaux)
+- [x] Créer des tâches dans les 5 catégories:
+   - [x] Recherche d'information (24 tâches)
+   - [x] Raisonnement séquentiel (24 tâches)
+   - [x] Récupération documentaire (24 tâches)
+   - [x] Multi-agent (24 tâches)
+   - [x] Erreurs et ambiguïtés (24 tâches)
+- [x] Pour chaque tâche T_i, créer des prompts dans `prompts.yaml` pour les 4 frameworks
+- [x] Valider que chaque prompt est coherent et testable
+- [x] Créer un script `validate_tasks.py` pour vérifier la cohérence
 
 Bonnes pratiques :
 
@@ -338,11 +342,11 @@ Pour obtenir des résultats comparables, il faut fixer :
 
 **Checklist technique :**
 
-- [ ] Créer ou mettre à jour `run_all.py` avec les options: `--frameworks`, `--repeats`, `--output-dir`, `--mode` (mock/real)
-- [ ] Ajouter les arguments optionnels: `--verbose`, `--log-level`, `--timeout`
-- [ ] Tester le mode mock: `python run_all.py --frameworks mock --repeats 2 --mode mock`
-- [ ] Créer un script `run_benchmark.sh` pour lancer la campagne complète
-- [ ] Documentez les paramètres fixes: température, max_tokens, timeout par tâche
+- [x] Créer ou mettre à jour `run_all.py` avec les options: `--frameworks`, `--repeats`, `--output-dir`, `--mode` (mock/real)
+- [x] Ajouter les arguments optionnels: `--verbose`, `--log-level`, `--timeout`
+- [x] Tester le mode mock: `python run_all.py --frameworks mock --repeats 2 --mode mock`
+- [x] Créer un script `run_benchmark.sh` pour lancer la campagne complète
+- [x] Documentez les paramètres fixes: température, max_tokens, timeout par tâche
 
 ## 7. Collecte et traçabilité des résultats
 
@@ -362,12 +366,12 @@ Il est recommandé de conserver les sorties brutes dans un dossier de logs sépa
 
 **Checklist technique :**
 
-- [ ] Créer un dossier `logs/` pour stocker les résultats JSON
-- [ ] Implémenter un système de timestamps: `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
-- [ ] Créer `logs/manifest.json` pour indexer toutes les exécutions
-- [ ] Implémenter un archivage automatique: `logs/archive/`
-- [ ] Créer un script `cleanup_logs.py` pour gérer les anciens logs
-- [ ] Tester que les logs sont valides JSON: `python -m json.tool logs/*.json`
+- [x] Créer un dossier `logs/` pour stocker les résultats JSON
+- [x] Implémenter un système de timestamps: `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
+- [x] Créer `logs/manifest.json` pour indexer toutes les exécutions
+- [x] Implémenter un archivage automatique: `logs/archive/`
+- [x] Créer un script `cleanup_logs.py` pour gérer les anciens logs
+- [x] Tester que les logs sont valides JSON: `python -m json.tool logs/*.json`
 
 ## 8. Analyse des résultats
 
@@ -397,11 +401,11 @@ Pour le PDF final, il est utile de présenter aussi :
 
 **Checklist technique :**
 
-- [ ] Créer un script `analyze.py` qui lit tous les logs JSON
-- [ ] Calculer les statistiques agrégées par framework et par catégorie
-- [ ] Générer les tableaux CSV: `results/summary_by_framework.csv`, `results/summary_by_category.csv`
-- [ ] Générer les graphiques: `results/latency_boxplot.png`, `results/completion_rates.png`
-- [ ] Exporter les résultats en JSON pour le rapport: `results/analysis.json`
+- [x] Créer un script `analyze.py` qui lit tous les logs JSON
+- [x] Calculer les statistiques agrégées par framework et par catégorie
+- [x] Générer les tableaux CSV: `results/summary_by_framework.csv`, `results/summary_by_category.csv`
+- [x] Générer les graphiques: `results/latency_boxplot.png`, `results/completion_rates.png`
+- [x] Exporter les résultats en JSON pour le rapport: `results/analysis.json`
 - [ ] Créer un rapport HTML interactif (optionnel): `results/dashboard.html`
 - [ ] Valider que toutes les données nécessaires au rapport sont prêtes
 

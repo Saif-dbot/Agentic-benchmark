@@ -1,64 +1,1488 @@
-# Prompts prêts à l'emploi par tâche et par framework
-# {framework} peut être LangChain, CrewAI, AutoGen, LlamaIndex
-
-T1:
-  LangChain: "Trouve l'horaire d'ouverture de la mairie de Lyon et fournis la source en une phrase."
-  CrewAI: "(Role: Chercheur) Recherche l'horaire d'ouverture de la mairie de Lyon. (Role: Vérificateur) Vérifie la fiabilité de la source et renvoie la source."
-  AutoGen: "Collaborez entre agents pour trouver l'horaire d'ouverture de la mairie de Lyon, vérifiez la source et retournez une synthèse." 
-  LlamaIndex: "À partir du corpus web indexé, donne l'horaire d'ouverture de la mairie de Lyon et cite la page exacte."
-
-T2:
-  LangChain: "Explique simplement ce que signifie 'RAG' et donne un exemple d'application."
-  CrewAI: "(Chercheur) Définis RAG; (Expliqueur) Donne un exemple simple et concret."
-  AutoGen: "Agents: expliquez RAG en termes simples et fournissez un exemple d'usage collaboratif."
-  LlamaIndex: "À partir des documents indexés, résume la définition de RAG et fournis un exemple." 
-
-T3:
-  LangChain: "Résume en deux phrases le texte suivant : {text}."
-  CrewAI: "(Synthétiseur) Lis le texte et fournis un résumé clair en deux phrases."
-  AutoGen: "Agent A extrait les points importants, Agent B rédige un résumé de deux phrases."
-  LlamaIndex: "Utilise l'index documentaire pour produire un résumé de deux phrases du passage donné."
-
-T4:
-  LangChain: "Convertis 10 km en miles et montre le calcul."
-  CrewAI: "(Calculateur) Effectue la conversion 10 km -> miles et montre les étapes de calcul."
-  AutoGen: "Un agent calcule la conversion et un second vérifie les étapes. Fournissez la réponse finale."
-  LlamaIndex: "Non applicable (simple calcul). Utilisez prompt de base : Convertis 10 km en miles et montre le calcul."
-
-T5:
-  LangChain: "Trouve le numéro d'urgence sanitaire en France et cite la source officielle."
-  CrewAI: "(Chercheur) Recherche le numéro; (Vérificateur) Confirme la source officielle puis renvoie."
-  AutoGen: "Coordonnez pour obtenir le numéro d'urgence sanitaire français et fournissez la source."
-  LlamaIndex: "À partir du corpus indexé, retrouve le numéro d'urgence sanitaire et indique la source."
-
-# Prompts pour T6..T10
-T6:
-  LangChain: "Résous : Si 3x + 5 = 20, quel est x ? Montre les étapes clairement."
-  CrewAI: "(Calculateur) Résous l'équation 3x + 5 = 20 en détaillant chaque étape."
-  AutoGen: "Agent A propose une solution, Agent B vérifie les étapes; retournez la solution finale et la vérification."
-  LlamaIndex: "(non applicable) Utilisez le prompt de base pour résoudre l'équation et montrer les étapes."
-
-T7:
-  LangChain: "Compare deux articles et indique lequel semble plus fiable en justifiant (URLs: {url1}, {url2})."
-  CrewAI: "(Chercheur) Analyse chaque URL; (Vérificateur) Donne un verdict sur la fiabilité avec justification."
-  AutoGen: "Agents: A extrait les preuves de chaque article, B évalue la crédibilité, C synthétise le verdict."
-  LlamaIndex: "À partir des documents indexés, compare les positions et indique la source la plus fiable."
-
-T8:
-  LangChain: "En te basant sur les 3 documents fournis, réponds à : {question}. Indique quelles phrases du corpus supportent la réponse."
-  CrewAI: "(Collecteur) Récupère les passages pertinents; (Synthétiseur) Rédige la réponse en citant les passages."
-  AutoGen: "Agents coopèrent pour extraire les passages et rédiger une réponse sourcée."
-  LlamaIndex: "Interroge l'index documentaire et fournis la réponse avec références aux documents."
-
-T9:
-  LangChain: "Propose un planning en 5 étapes pour organiser une petite conférence d'une journée."
-  CrewAI: "(Planificateur) Propose 5 étapes ; (Vérificateur) Vérifie la cohérence temporelle et les contraintes."
-  AutoGen: "Agent A propose le planning, Agent B vérifie les contraintes, Agent C finalise et formate."
-  LlamaIndex: "Non spécifique au corpus: utilisez le prompt de base pour produire le planning."
-
-T10:
-  LangChain: "Coordonnez trois agents: A collecte des faits sur le thème X, B vérifie la validité, C synthétise en une page. Donnez la synthèse."
-  CrewAI: "Définissez les rôles puis exécutez la coopération: A, B, C. Retournez la synthèse et les preuves."
-  AutoGen: "Simulez une conversation multi-agent où A, B, C accomplissent les tâches décrites et produisent une synthèse conjointe."
-  LlamaIndex: "Si X est dans le corpus, récupérer les passages pertinents et produire la synthèse avec références."
-# Les tâches T6..T10 peuvent suivre le même schéma ; vous pouvez dupliquer/adapter si nécessaire.
+T001:
+  LangChain: '[Niveau 1] trouve l''information demandee pour le scenario 1 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) trouve l''information demandee pour le scenario
+    1 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 1.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 1 et indique une source fiable.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 1 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T002:
+  LangChain: '[Niveau 2] trouve l''information demandee pour le scenario 2 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) trouve l''information demandee pour le scenario
+    2 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 2.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 2 et indique une source fiable.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 2 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T003:
+  LangChain: '[Niveau 3] trouve l''information demandee pour le scenario 3 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) trouve l''information demandee pour le scenario
+    3 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 3.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 3 et indique une source fiable.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 3 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T004:
+  LangChain: '[Niveau 4] trouve l''information demandee pour le scenario 4 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) trouve l''information demandee pour le scenario
+    4 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 4.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 4 et indique une source fiable.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 4 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T005:
+  LangChain: '[Niveau 5] trouve l''information demandee pour le scenario 5 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) trouve l''information demandee pour le scenario
+    5 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 5.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 5 et indique une source fiable.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 5 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T006:
+  LangChain: '[Niveau 1] trouve l''information demandee pour le scenario 6 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) trouve l''information demandee pour le scenario
+    6 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 6.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 6 et indique une source fiable.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 6 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T007:
+  LangChain: '[Niveau 2] trouve l''information demandee pour le scenario 7 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) trouve l''information demandee pour le scenario
+    7 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 7.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 7 et indique une source fiable.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 7 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T008:
+  LangChain: '[Niveau 3] trouve l''information demandee pour le scenario 8 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) trouve l''information demandee pour le scenario
+    8 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 8.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 8 et indique une source fiable.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 8 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T009:
+  LangChain: '[Niveau 4] trouve l''information demandee pour le scenario 9 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) trouve l''information demandee pour le scenario
+    9 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 9.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 9 et indique une source fiable.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 9 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T010:
+  LangChain: '[Niveau 5] trouve l''information demandee pour le scenario 10 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) trouve l''information demandee pour le scenario
+    10 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 10.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 10 et indique une source fiable.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 10 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T011:
+  LangChain: '[Niveau 1] trouve l''information demandee pour le scenario 11 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) trouve l''information demandee pour le scenario
+    11 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 11.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 11 et indique une source fiable.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 11 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T012:
+  LangChain: '[Niveau 2] trouve l''information demandee pour le scenario 12 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) trouve l''information demandee pour le scenario
+    12 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 12.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 12 et indique une source fiable.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 12 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T013:
+  LangChain: '[Niveau 3] trouve l''information demandee pour le scenario 13 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) trouve l''information demandee pour le scenario
+    13 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 13.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 13 et indique une source fiable.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 13 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T014:
+  LangChain: '[Niveau 4] trouve l''information demandee pour le scenario 14 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) trouve l''information demandee pour le scenario
+    14 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 14.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 14 et indique une source fiable.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 14 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T015:
+  LangChain: '[Niveau 5] trouve l''information demandee pour le scenario 15 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) trouve l''information demandee pour le scenario
+    15 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 15.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 15 et indique une source fiable.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 15 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T016:
+  LangChain: '[Niveau 1] trouve l''information demandee pour le scenario 16 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) trouve l''information demandee pour le scenario
+    16 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 16.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 16 et indique une source fiable.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 16 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T017:
+  LangChain: '[Niveau 2] trouve l''information demandee pour le scenario 17 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) trouve l''information demandee pour le scenario
+    17 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 17.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 17 et indique une source fiable.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 17 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T018:
+  LangChain: '[Niveau 3] trouve l''information demandee pour le scenario 18 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) trouve l''information demandee pour le scenario
+    18 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 18.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 18 et indique une source fiable.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 18 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T019:
+  LangChain: '[Niveau 4] trouve l''information demandee pour le scenario 19 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) trouve l''information demandee pour le scenario
+    19 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 19.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 19 et indique une source fiable.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 19 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T020:
+  LangChain: '[Niveau 5] trouve l''information demandee pour le scenario 20 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) trouve l''information demandee pour le scenario
+    20 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 20.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 20 et indique une source fiable.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 20 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T021:
+  LangChain: '[Niveau 1] trouve l''information demandee pour le scenario 21 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) trouve l''information demandee pour le scenario
+    21 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 21.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 21 et indique une source fiable.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 21 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T022:
+  LangChain: '[Niveau 2] trouve l''information demandee pour le scenario 22 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) trouve l''information demandee pour le scenario
+    22 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 22.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 22 et indique une source fiable.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 22 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T023:
+  LangChain: '[Niveau 3] trouve l''information demandee pour le scenario 23 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) trouve l''information demandee pour le scenario
+    23 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 23.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 23 et indique une source fiable.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 23 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T024:
+  LangChain: '[Niveau 4] trouve l''information demandee pour le scenario 24 et indique
+    une source fiable. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) trouve l''information demandee pour le scenario
+    24 et indique une source fiable. (Role: Verificateur) Controle la coherence. Contexte:
+    Recherche d''information, tache 24.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    trouve l''information demandee pour le scenario 24 et indique une source fiable.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, trouve l''information
+    demandee pour le scenario 24 et indique une source fiable. Retourne une reponse
+    sourcee quand applicable.'
+T025:
+  LangChain: '[Niveau 1] resous le probleme en etapes ordonnees pour le scenario 1
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 1 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 1.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 1 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 1 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T026:
+  LangChain: '[Niveau 2] resous le probleme en etapes ordonnees pour le scenario 2
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 2 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 2.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 2 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 2 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T027:
+  LangChain: '[Niveau 3] resous le probleme en etapes ordonnees pour le scenario 3
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 3 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 3.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 3 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 3 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T028:
+  LangChain: '[Niveau 4] resous le probleme en etapes ordonnees pour le scenario 4
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 4 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 4.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 4 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 4 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T029:
+  LangChain: '[Niveau 5] resous le probleme en etapes ordonnees pour le scenario 5
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 5 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 5.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 5 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 5 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T030:
+  LangChain: '[Niveau 1] resous le probleme en etapes ordonnees pour le scenario 6
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 6 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 6.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 6 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 6 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T031:
+  LangChain: '[Niveau 2] resous le probleme en etapes ordonnees pour le scenario 7
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 7 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 7.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 7 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 7 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T032:
+  LangChain: '[Niveau 3] resous le probleme en etapes ordonnees pour le scenario 8
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 8 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 8.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 8 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 8 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T033:
+  LangChain: '[Niveau 4] resous le probleme en etapes ordonnees pour le scenario 9
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 9 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 9.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 9 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 9 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T034:
+  LangChain: '[Niveau 5] resous le probleme en etapes ordonnees pour le scenario 10
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 10 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 10.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 10 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 10 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T035:
+  LangChain: '[Niveau 1] resous le probleme en etapes ordonnees pour le scenario 11
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 11 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 11.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 11 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 11 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T036:
+  LangChain: '[Niveau 2] resous le probleme en etapes ordonnees pour le scenario 12
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 12 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 12.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 12 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 12 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T037:
+  LangChain: '[Niveau 3] resous le probleme en etapes ordonnees pour le scenario 13
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 13 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 13.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 13 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 13 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T038:
+  LangChain: '[Niveau 4] resous le probleme en etapes ordonnees pour le scenario 14
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 14 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 14.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 14 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 14 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T039:
+  LangChain: '[Niveau 5] resous le probleme en etapes ordonnees pour le scenario 15
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 15 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 15.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 15 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 15 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T040:
+  LangChain: '[Niveau 1] resous le probleme en etapes ordonnees pour le scenario 16
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 16 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 16.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 16 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 16 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T041:
+  LangChain: '[Niveau 2] resous le probleme en etapes ordonnees pour le scenario 17
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 17 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 17.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 17 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 17 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T042:
+  LangChain: '[Niveau 3] resous le probleme en etapes ordonnees pour le scenario 18
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 18 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 18.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 18 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 18 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T043:
+  LangChain: '[Niveau 4] resous le probleme en etapes ordonnees pour le scenario 19
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 19 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 19.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 19 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 19 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T044:
+  LangChain: '[Niveau 5] resous le probleme en etapes ordonnees pour le scenario 20
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 20 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 20.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 20 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 20 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T045:
+  LangChain: '[Niveau 1] resous le probleme en etapes ordonnees pour le scenario 21
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 21 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 21.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 21 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 21 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T046:
+  LangChain: '[Niveau 2] resous le probleme en etapes ordonnees pour le scenario 22
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 22 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 22.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 22 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 22 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T047:
+  LangChain: '[Niveau 3] resous le probleme en etapes ordonnees pour le scenario 23
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 23 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 23.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 23 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 23 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T048:
+  LangChain: '[Niveau 4] resous le probleme en etapes ordonnees pour le scenario 24
+    et donne le resultat final. Reponds en texte concis et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) resous le probleme en etapes ordonnees pour
+    le scenario 24 et donne le resultat final. (Role: Verificateur) Controle la coherence.
+    Contexte: Raisonnement sequentiel, tache 24.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    resous le probleme en etapes ordonnees pour le scenario 24 et donne le resultat
+    final.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, resous le probleme
+    en etapes ordonnees pour le scenario 24 et donne le resultat final. Retourne une
+    reponse sourcee quand applicable.'
+T049:
+  LangChain: '[Niveau 1] reponds a la question du scenario 1 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) reponds a la question du scenario 1 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 1.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 1 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 1 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T050:
+  LangChain: '[Niveau 2] reponds a la question du scenario 2 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) reponds a la question du scenario 2 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 2.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 2 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 2 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T051:
+  LangChain: '[Niveau 3] reponds a la question du scenario 3 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) reponds a la question du scenario 3 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 3.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 3 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 3 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T052:
+  LangChain: '[Niveau 4] reponds a la question du scenario 4 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) reponds a la question du scenario 4 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 4.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 4 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 4 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T053:
+  LangChain: '[Niveau 5] reponds a la question du scenario 5 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) reponds a la question du scenario 5 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 5.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 5 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 5 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T054:
+  LangChain: '[Niveau 1] reponds a la question du scenario 6 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) reponds a la question du scenario 6 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 6.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 6 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 6 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T055:
+  LangChain: '[Niveau 2] reponds a la question du scenario 7 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) reponds a la question du scenario 7 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 7.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 7 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 7 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T056:
+  LangChain: '[Niveau 3] reponds a la question du scenario 8 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) reponds a la question du scenario 8 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 8.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 8 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 8 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T057:
+  LangChain: '[Niveau 4] reponds a la question du scenario 9 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) reponds a la question du scenario 9 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 9.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 9 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 9 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T058:
+  LangChain: '[Niveau 5] reponds a la question du scenario 10 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) reponds a la question du scenario 10 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 10.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 10 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 10 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T059:
+  LangChain: '[Niveau 1] reponds a la question du scenario 11 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) reponds a la question du scenario 11 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 11.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 11 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 11 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T060:
+  LangChain: '[Niveau 2] reponds a la question du scenario 12 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) reponds a la question du scenario 12 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 12.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 12 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 12 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T061:
+  LangChain: '[Niveau 3] reponds a la question du scenario 13 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) reponds a la question du scenario 13 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 13.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 13 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 13 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T062:
+  LangChain: '[Niveau 4] reponds a la question du scenario 14 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) reponds a la question du scenario 14 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 14.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 14 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 14 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T063:
+  LangChain: '[Niveau 5] reponds a la question du scenario 15 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) reponds a la question du scenario 15 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 15.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 15 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 15 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T064:
+  LangChain: '[Niveau 1] reponds a la question du scenario 16 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) reponds a la question du scenario 16 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 16.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 16 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 16 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T065:
+  LangChain: '[Niveau 2] reponds a la question du scenario 17 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) reponds a la question du scenario 17 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 17.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 17 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 17 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T066:
+  LangChain: '[Niveau 3] reponds a la question du scenario 18 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) reponds a la question du scenario 18 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 18.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 18 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 18 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T067:
+  LangChain: '[Niveau 4] reponds a la question du scenario 19 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) reponds a la question du scenario 19 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 19.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 19 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 19 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T068:
+  LangChain: '[Niveau 5] reponds a la question du scenario 20 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) reponds a la question du scenario 20 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 20.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 20 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 20 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T069:
+  LangChain: '[Niveau 1] reponds a la question du scenario 21 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) reponds a la question du scenario 21 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 21.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 21 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 21 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T070:
+  LangChain: '[Niveau 2] reponds a la question du scenario 22 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) reponds a la question du scenario 22 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 22.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 22 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 22 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T071:
+  LangChain: '[Niveau 3] reponds a la question du scenario 23 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) reponds a la question du scenario 23 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 23.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 23 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 23 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T072:
+  LangChain: '[Niveau 4] reponds a la question du scenario 24 a partir des documents
+    fournis et cite les passages utiles. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) reponds a la question du scenario 24 a partir
+    des documents fournis et cite les passages utiles. (Role: Verificateur) Controle
+    la coherence. Contexte: Recuperation documentaire, tache 24.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    reponds a la question du scenario 24 a partir des documents fournis et cite les
+    passages utiles.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, reponds a la question
+    du scenario 24 a partir des documents fournis et cite les passages utiles. Retourne
+    une reponse sourcee quand applicable.'
+T073:
+  LangChain: '[Niveau 1] coordonne trois agents pour le scenario 1 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) coordonne trois agents pour le scenario 1 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 1.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 1 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 1 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T074:
+  LangChain: '[Niveau 2] coordonne trois agents pour le scenario 2 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) coordonne trois agents pour le scenario 2 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 2.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 2 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 2 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T075:
+  LangChain: '[Niveau 3] coordonne trois agents pour le scenario 3 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) coordonne trois agents pour le scenario 3 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 3.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 3 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 3 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T076:
+  LangChain: '[Niveau 4] coordonne trois agents pour le scenario 4 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) coordonne trois agents pour le scenario 4 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 4.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 4 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 4 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T077:
+  LangChain: '[Niveau 5] coordonne trois agents pour le scenario 5 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) coordonne trois agents pour le scenario 5 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 5.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 5 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 5 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T078:
+  LangChain: '[Niveau 1] coordonne trois agents pour le scenario 6 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) coordonne trois agents pour le scenario 6 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 6.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 6 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 6 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T079:
+  LangChain: '[Niveau 2] coordonne trois agents pour le scenario 7 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) coordonne trois agents pour le scenario 7 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 7.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 7 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 7 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T080:
+  LangChain: '[Niveau 3] coordonne trois agents pour le scenario 8 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) coordonne trois agents pour le scenario 8 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 8.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 8 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 8 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T081:
+  LangChain: '[Niveau 4] coordonne trois agents pour le scenario 9 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) coordonne trois agents pour le scenario 9 afin
+    de produire une reponse finale unique et coherente. (Role: Verificateur) Controle
+    la coherence. Contexte: Collaboration multi-agent, tache 9.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 9 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 9 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T082:
+  LangChain: '[Niveau 5] coordonne trois agents pour le scenario 10 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) coordonne trois agents pour le scenario 10
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 10.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 10 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 10 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T083:
+  LangChain: '[Niveau 1] coordonne trois agents pour le scenario 11 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) coordonne trois agents pour le scenario 11
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 11.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 11 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 11 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T084:
+  LangChain: '[Niveau 2] coordonne trois agents pour le scenario 12 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) coordonne trois agents pour le scenario 12
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 12.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 12 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 12 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T085:
+  LangChain: '[Niveau 3] coordonne trois agents pour le scenario 13 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) coordonne trois agents pour le scenario 13
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 13.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 13 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 13 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T086:
+  LangChain: '[Niveau 4] coordonne trois agents pour le scenario 14 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) coordonne trois agents pour le scenario 14
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 14.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 14 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 14 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T087:
+  LangChain: '[Niveau 5] coordonne trois agents pour le scenario 15 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) coordonne trois agents pour le scenario 15
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 15.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 15 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 15 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T088:
+  LangChain: '[Niveau 1] coordonne trois agents pour le scenario 16 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) coordonne trois agents pour le scenario 16
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 16.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 16 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 16 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T089:
+  LangChain: '[Niveau 2] coordonne trois agents pour le scenario 17 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) coordonne trois agents pour le scenario 17
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 17.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 17 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 17 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T090:
+  LangChain: '[Niveau 3] coordonne trois agents pour le scenario 18 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) coordonne trois agents pour le scenario 18
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 18.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 18 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 18 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T091:
+  LangChain: '[Niveau 4] coordonne trois agents pour le scenario 19 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) coordonne trois agents pour le scenario 19
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 19.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 19 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 19 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T092:
+  LangChain: '[Niveau 5] coordonne trois agents pour le scenario 20 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) coordonne trois agents pour le scenario 20
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 20.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 20 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 20 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T093:
+  LangChain: '[Niveau 1] coordonne trois agents pour le scenario 21 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) coordonne trois agents pour le scenario 21
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 21.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 21 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 21 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T094:
+  LangChain: '[Niveau 2] coordonne trois agents pour le scenario 22 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) coordonne trois agents pour le scenario 22
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 22.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 22 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 22 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T095:
+  LangChain: '[Niveau 3] coordonne trois agents pour le scenario 23 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) coordonne trois agents pour le scenario 23
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 23.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 23 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 23 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T096:
+  LangChain: '[Niveau 4] coordonne trois agents pour le scenario 24 afin de produire
+    une reponse finale unique et coherente. Reponds en texte concis et cite tes etapes
+    si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) coordonne trois agents pour le scenario 24
+    afin de produire une reponse finale unique et coherente. (Role: Verificateur)
+    Controle la coherence. Contexte: Collaboration multi-agent, tache 24.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    coordonne trois agents pour le scenario 24 afin de produire une reponse finale
+    unique et coherente.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, coordonne trois agents
+    pour le scenario 24 afin de produire une reponse finale unique et coherente. Retourne
+    une reponse sourcee quand applicable.'
+T097:
+  LangChain: '[Niveau 1] gere une entree ambigue ou partiellement erronee du scenario
+    1, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 1, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 1.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 1, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 1, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T098:
+  LangChain: '[Niveau 2] gere une entree ambigue ou partiellement erronee du scenario
+    2, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 2, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 2.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 2, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 2, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T099:
+  LangChain: '[Niveau 3] gere une entree ambigue ou partiellement erronee du scenario
+    3, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 3, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 3.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 3, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 3, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T100:
+  LangChain: '[Niveau 4] gere une entree ambigue ou partiellement erronee du scenario
+    4, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 4, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 4.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 4, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 4, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T101:
+  LangChain: '[Niveau 5] gere une entree ambigue ou partiellement erronee du scenario
+    5, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 5, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 5.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 5, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 5, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T102:
+  LangChain: '[Niveau 1] gere une entree ambigue ou partiellement erronee du scenario
+    6, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 6, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 6.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 6, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 6, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T103:
+  LangChain: '[Niveau 2] gere une entree ambigue ou partiellement erronee du scenario
+    7, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 7, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 7.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 7, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 7, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T104:
+  LangChain: '[Niveau 3] gere une entree ambigue ou partiellement erronee du scenario
+    8, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 8, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 8.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 8, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 8, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T105:
+  LangChain: '[Niveau 4] gere une entree ambigue ou partiellement erronee du scenario
+    9, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 9, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 9.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 9, clarifie les hypotheses
+    et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 9, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T106:
+  LangChain: '[Niveau 5] gere une entree ambigue ou partiellement erronee du scenario
+    10, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 10, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 10.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 10, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 10, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T107:
+  LangChain: '[Niveau 1] gere une entree ambigue ou partiellement erronee du scenario
+    11, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 11, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 11.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 11, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 11, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T108:
+  LangChain: '[Niveau 2] gere une entree ambigue ou partiellement erronee du scenario
+    12, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 12, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 12.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 12, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 12, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T109:
+  LangChain: '[Niveau 3] gere une entree ambigue ou partiellement erronee du scenario
+    13, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 13, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 13.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 13, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 13, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T110:
+  LangChain: '[Niveau 4] gere une entree ambigue ou partiellement erronee du scenario
+    14, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 14, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 14.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 14, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 14, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T111:
+  LangChain: '[Niveau 5] gere une entree ambigue ou partiellement erronee du scenario
+    15, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 15, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 15.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 15, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 15, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T112:
+  LangChain: '[Niveau 1] gere une entree ambigue ou partiellement erronee du scenario
+    16, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 16, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 16.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 16, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 16, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T113:
+  LangChain: '[Niveau 2] gere une entree ambigue ou partiellement erronee du scenario
+    17, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 17, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 17.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 17, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 17, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T114:
+  LangChain: '[Niveau 3] gere une entree ambigue ou partiellement erronee du scenario
+    18, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 18, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 18.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 18, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 18, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T115:
+  LangChain: '[Niveau 4] gere une entree ambigue ou partiellement erronee du scenario
+    19, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 19, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 19.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 19, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 19, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T116:
+  LangChain: '[Niveau 5] gere une entree ambigue ou partiellement erronee du scenario
+    20, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 5] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 20, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 20.'
+  AutoGen: '[Niveau 5] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 20, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 5] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 20, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T117:
+  LangChain: '[Niveau 1] gere une entree ambigue ou partiellement erronee du scenario
+    21, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 1] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 21, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 21.'
+  AutoGen: '[Niveau 1] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 21, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 1] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 21, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T118:
+  LangChain: '[Niveau 2] gere une entree ambigue ou partiellement erronee du scenario
+    22, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 2] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 22, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 22.'
+  AutoGen: '[Niveau 2] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 22, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 2] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 22, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T119:
+  LangChain: '[Niveau 3] gere une entree ambigue ou partiellement erronee du scenario
+    23, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 3] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 23, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 23.'
+  AutoGen: '[Niveau 3] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 23, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 3] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 23, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'
+T120:
+  LangChain: '[Niveau 4] gere une entree ambigue ou partiellement erronee du scenario
+    24, clarifie les hypotheses et propose une reponse robuste. Reponds en texte concis
+    et cite tes etapes si utile.'
+  CrewAI: '[Niveau 4] (Role: Analyste) gere une entree ambigue ou partiellement erronee
+    du scenario 24, clarifie les hypotheses et propose une reponse robuste. (Role:
+    Verificateur) Controle la coherence. Contexte: Erreurs et ambiguite, tache 24.'
+  AutoGen: '[Niveau 4] Agent A analyse, Agent B verifie, Agent C synthese. Mission:
+    gere une entree ambigue ou partiellement erronee du scenario 24, clarifie les
+    hypotheses et propose une reponse robuste.'
+  LlamaIndex: '[Niveau 4] En t''appuyant sur le corpus fourni, gere une entree ambigue
+    ou partiellement erronee du scenario 24, clarifie les hypotheses et propose une
+    reponse robuste. Retourne une reponse sourcee quand applicable.'

@@ -10,57 +10,61 @@ Les tâches à accomplir pour générer les données et les résultats du benchm
 
 ### Phase 1 : Environnement et configuration
 
-- [ ] Créer et activer l'environnement Python `.venv`
-- [ ] Installer les dépendances (`pip install -r requirements.txt`)
-- [ ] Créer le fichier local `config.json` (non versionné)
+- [x] Créer et activer l'environnement Python `.venv`
+- [x] Installer les dépendances (`pip install -r requirements.txt`)
+- [x] Créer le fichier local `config.json` (non versionné)
 - [ ] Configurer les variables d'environnement pour les clés API
 - [ ] Tester la connexion au fournisseur LLM
 
+Statut au 2026-05-20 : `config.json` créé, chargeur de config validé. Il reste à injecter la clé API pour les appels réels.
+
 ### Phase 2 : Structure des adaptateurs
 
-- [ ] Créer le dossier `adapters/`
-- [ ] Implémenter `adapters/base_adapter.py` (interface commune)
-- [ ] Implémenter `adapters/langchain_adapter.py`
-- [ ] Implémenter `adapters/crewai_adapter.py`
-- [ ] Implémenter `adapters/autogen_adapter.py`
-- [ ] Implémenter `adapters/llamaindex_adapter.py`
-- [ ] Tester chaque adaptateur isolément
-- [ ] Valider que tous retournent le même schéma JSON
+- [x] Créer le dossier `adapters/`
+- [x] Implémenter `adapters/base_adapter.py` (interface commune)
+- [x] Implémenter `adapters/langchain_adapter.py`
+- [x] Implémenter `adapters/crewai_adapter.py`
+- [x] Implémenter `adapters/autogen_adapter.py`
+- [x] Implémenter `adapters/llamaindex_adapter.py`
+- [x] Tester chaque adaptateur isolément
+- [x] Valider que tous retournent le même schéma JSON
+
+Statut : structure `adapters/` initialisée et testée avec `test_adapters.py`.
 
 ### Phase 3 : Tâches et prompts
 
-- [ ] Élargir `tasks.yaml` à 120 tâches (24 par catégorie × 5 niveaux)
+- [x] Élargir `tasks.yaml` à 120 tâches (24 par catégorie × 5 niveaux)
 - [ ] Couvrir les 5 catégories :
-  - [ ] Recherche d'information (24 tâches)
-  - [ ] Raisonnement séquentiel (24 tâches)
-  - [ ] Récupération documentaire (24 tâches)
-  - [ ] Multi-agent (24 tâches)
-  - [ ] Erreurs et ambiguïtés (24 tâches)
-- [ ] Créer les prompts associés dans `prompts.yaml` pour chaque framework
-- [ ] Valider la cohérence avec `validate_tasks.py`
+  - [x] Recherche d'information (24 tâches)
+  - [x] Raisonnement séquentiel (24 tâches)
+  - [x] Récupération documentaire (24 tâches)
+  - [x] Multi-agent (24 tâches)
+  - [x] Erreurs et ambiguïtés (24 tâches)
+- [x] Créer les prompts associés dans `prompts.yaml` pour chaque framework
+- [x] Valider la cohérence avec `validate_tasks.py`
 
 ### Phase 4 : Orchestration et exécution
 
-- [ ] Créer/mettre à jour `run_all.py` avec les options : `--frameworks`, `--repeats`, `--output-dir`, `--mode`
-- [ ] Implémenter le mode mock pour tester sans API
-- [ ] Tester le mode mock: `python run_all.py --frameworks mock --repeats 2 --mode mock`
-- [ ] Documenter les paramètres fixes (température, tokens, timeout)
+- [x] Créer/mettre à jour `run_all.py` avec les options : `--frameworks`, `--repeats`, `--output-dir`, `--mode`
+- [x] Implémenter le mode mock pour tester sans API
+- [x] Tester le mode mock: `python run_all.py --frameworks mock --repeats 2 --mode mock`
+- [x] Documenter les paramètres fixes (température, tokens, timeout)
 
 ### Phase 5 : Collecte des résultats
 
-- [ ] Créer le dossier `logs/`
-- [ ] Implémenter les logs JSON horodatés : `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
-- [ ] Créer `logs/manifest.json` pour l'index des exécutions
-- [ ] Implémenter l'archivage automatique
-- [ ] Valider que les logs sont en JSON valide
+- [x] Créer le dossier `logs/`
+- [x] Implémenter les logs JSON horodatés : `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
+- [x] Créer `logs/manifest.json` pour l'index des exécutions
+- [x] Implémenter l'archivage automatique
+- [x] Valider que les logs sont en JSON valide
 
 ### Phase 6 : Analyse
 
-- [ ] Créer le script `analyze.py`
-- [ ] Calculer les statistiques agrégées (taux, latence, erreurs)
-- [ ] Générer les CSV : `results/summary_by_framework.csv`, `results/summary_by_category.csv`
-- [ ] Générer les graphiques : `results/latency_boxplot.png`, `results/completion_rates.png`
-- [ ] Exporter en JSON pour le rapport : `results/analysis.json`
+- [x] Créer le script `analyze.py`
+- [x] Calculer les statistiques agrégées (taux, latence, erreurs)
+- [x] Générer les CSV : `results/summary_by_framework.csv`, `results/summary_by_category.csv`
+- [x] Générer les graphiques : `results/latency_boxplot.png`, `results/completion_rates.png`
+- [x] Exporter en JSON pour le rapport : `results/analysis.json`
 - [ ] Valider que toutes les données pour le rapport sont prêtes
 
 ---
