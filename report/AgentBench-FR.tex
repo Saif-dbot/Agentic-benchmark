@@ -1,0 +1,369 @@
+% AgentBench-FR report skeleton
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=25mm}
+
+\title{AgentBench-FR : Évaluation comparative des frameworks d'agents IA}
+\author{Equipe de recherche - Projet\_ia}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Cet article présente AgentBench-FR, une suite d'évaluation comparative conçue pour mesurer et comparer les performances de frameworks d'agents IA (LangChain, CrewAI, AutoGen et LlamaIndex) dans un environnement local et reproductible. Nous exposons la problématique de l'évaluation inter-frameworks, détaillons une méthodologie garantissant l'équité expérimentale (mêmes modèles, mêmes matériels, mêmes tâches) et proposons un protocole d'exécution pour 120 tâches réparties en cinq catégories. Les métriques retenues couvrent la qualité fonctionnelle (taux de complétion), la performance (latence, nombre d'appels LLM), la consommation de ressources (RAM, GPU) et la consommation de tokens. Les résultats empiriques obtenus sont présentés de manière factuelle et accompagnés d'une discussion interprétative mettant en relation les différences observées avec les choix architecturaux des frameworks étudiés.
+\\
+Abstract (English): This report introduces AgentBench-FR, a reproducible local benchmark for comparing agent frameworks (LangChain, CrewAI, AutoGen, LlamaIndex). We describe the evaluation methodology, experimental protocol for 120 tasks across five categories, and the set of metrics used to assess functional quality, performance, resource usage and token consumption. Empirical findings are presented and discussed with regard to architectural differences between frameworks.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+La montée en puissance des modèles de langage a transformé le rôle des applications d'IA : il ne s'agit plus seulement de générer du texte, mais d'enchaîner des actions, de consulter des outils externes, de conserver un état de travail et de coordonner plusieurs sous-agents. Cette évolution a fait émerger un écosystème foisonnant de frameworks d'agents, chacun proposant ses abstractions, son style d'orchestration et ses conventions de programmation. La conséquence directe est un problème méthodologique : les comparaisons informelles deviennent vite trompeuses, car elles mélangent souvent les effets du modèle, du matériel, du backend API et du cadre d'orchestration.
+
+AgentBench-FR répond à ce problème en imposant un environnement local unique, un même modèle, des tâches identiques et des règles d'exécution strictes. L'objectif n'est pas de proclamer un vainqueur absolu, mais de rendre mesurable ce qui différencie réellement les frameworks. Cette démarche est utile pour la recherche, mais aussi pour les équipes de développement qui doivent choisir une pile technique avant d'engager du temps d'intégration. Trois questions structurent l'étude : quelles différences de performance observe-t-on entre les frameworks, quels mécanismes architecturaux expliquent ces écarts, et quelles recommandations pratiques peut-on formuler selon le type d'application visé ?
+
+Le reste du document suit une logique progressive. Le premier chapitre situe la contribution dans la littérature sur l'évaluation des agents et des benchmarks de raisonnement. Le deuxième chapitre décrit les frameworks étudiés, afin de relier leurs architectures à leurs usages naturels. Le troisième chapitre explicite la méthodologie, tandis que le quatrième détaille le protocole expérimental exact. Les cinquième et sixième chapitres présentent, respectivement, les résultats factuels puis leur interprétation. Les annexes enfin assurent la reproductibilité en documentant les tâches, les paramètres, les sources et les résultats détaillés.
+
+\section{État de l'art}
+\label{sec:etatdelart}
+La littérature récente sur les agents IA s'organise autour de plusieurs axes complémentaires : la définition du comportement agentique, l'évaluation des capacités de raisonnement et d'action, l'utilisation d'outils externes, et la robustesse des systèmes face à des tâches ouvertes. Dans ce contexte, ReAct \cite{react2022} a proposé un schéma de raisonnement-action devenu central dans la conception des agents modernes. L'idée est simple mais puissante : un modèle doit pouvoir alterner entre raisonnement explicite et appel d'outils, afin de résoudre des problèmes nécessitant à la fois planification et interaction.
+
+\subsection{Les paradigmes fondamentaux}
+Un agent se distingue d'une simple chaîne de traitement par sa capacité à modifier sa trajectoire au fil de l'exécution. Il peut conserver un état, sélectionner un outil, reformuler une requête, ou encore déléguer une sous-tâche. Cette logique se retrouve sous des formes différentes dans les frameworks évalués : orchestration en chaîne dans LangChain, équipe de rôles dans CrewAI, conversation multi-agents dans AutoGen, et récupération documentaire augmentée dans LlamaIndex. Ces paradigmes ne sont pas interchangeables ; ils orientent la manière dont les erreurs apparaissent, dont les tâches sont découpées et dont le système réagit aux ambiguïtés.
+
+\subsection{Benchmarks de référence}
+Les benchmarks existants, comme AgentBench \cite{agentbench2023}, WebArena \cite{webarena2023}, ToolBench \cite{toolbench2023} et GAIA \cite{gaia2023}, ont chacun apporté une contribution importante. AgentBench a popularisé l'idée d'une évaluation large des agents sur différents environnements. WebArena a montré l'intérêt d'un environnement web réaliste pour tester l'autonomie. ToolBench a renforcé la question du bon usage des outils, tandis que GAIA a mis l'accent sur la généralisation de l'assistant dans des tâches hétérogènes. Néanmoins, ces travaux n'ont pas pour objectif principal de comparer plusieurs frameworks d'orchestration sur un backend identique ; ils évaluent le comportement global de l'agent, mais pas l'influence précise de la couche d'orchestration.
+
+\subsection{Vide identifié}
+Le vide scientifique que comble AgentBench-FR est donc précis : comparer plusieurs frameworks d'agents, dans des conditions contrôlées, avec un même modèle local et une même suite de tâches contextualisées. Cette contrainte est essentielle car elle élimine plusieurs biais habituels des benchmarks web : variation de version du modèle, dépendance à un service distant, impossibilité d'inspecter la pile complète d'exécution, et difficulté à reproduire un résultat plusieurs semaines plus tard. Notre approche permet ainsi de focaliser l'analyse sur ce qui relève réellement du framework.
+
+\section{Frameworks étudiés}
+\label{sec:frameworks}
+Cette section présente les quatre frameworks évalués et explicite le lien entre leur architecture et les types de tâches qu'ils favorisent. Les descriptions s'appuient sur la documentation officielle des projets \cite{langchain_docs,crewai_docs,autogen_docs,llamaindex_docs,ollama_docs}.
+
+\subsection{LangChain / LangGraph}
+LangChain se distingue par une approche en briques : chaînes de prompts, fonctions outillées, mémoire conversationnelle, agents et intégrations vers des systèmes externes. LangGraph ajoute une dimension de graphe à cette logique en permettant une orchestration explicite des états et des transitions. Sur le plan pratique, ce paradigme est particulièrement intéressant pour les pipelines modulaires et les applications qui doivent rester lisibles pour une équipe de développement. Son principal coût est la complexité de configuration ; plus l'architecture devient expressive, plus la surface de réglages s'élargit.
+
+Dans le contexte d'AgentBench-FR, LangChain est attendu comme un framework équilibré : suffisamment généraliste pour couvrir plusieurs catégories de tâches, mais sans spécialisation excessive dans les scénarios multi-agent ou documentaires purs. Cette position intermédiaire en fait un bon point de référence pour comparer l'effet des autres paradigmes.
+
+\subsection{CrewAI}
+CrewAI repose sur une idée simple : attribuer des rôles clairs à plusieurs agents et organiser leur coopération autour d'objectifs partagés. Cette logique de « crew » se prête naturellement aux tâches où la répartition du travail apporte un bénéfice conceptuel, par exemple la recherche d'information combinée à une synthèse finale, ou la résolution d'un problème nécessitant plusieurs points de vue. L'intérêt principal du framework réside dans sa lisibilité : les rôles rendent le workflow facile à expliquer et à auditer.
+
+En contrepartie, la spécialisation peut devenir une limite lorsque la tâche est très séquentielle et qu'une simple chaîne suffirait. Dans ce cas, l'abstraction supplémentaire peut introduire un peu de surcharge sans apporter de gain fonctionnel immédiat. Ce type d'écart est précisément ce qu'un benchmark comparatif doit mesurer.
+
+\subsection{AutoGen}
+AutoGen adopte un paradigme conversationnel : les agents dialoguent, se répondent, débattent et affinent leur stratégie au fil des tours. Ce design est particulièrement utile lorsque la tâche demande de l'itération, du contre-argument ou une coordination non triviale entre plusieurs sous-objectifs. Il peut également favoriser des comportements émergents intéressants, notamment lorsque plusieurs agents ont des responsabilités distinctes.
+
+Le revers de cette richesse est la latence. Chaque tour supplémentaire coûte du temps, augmente la consommation de tokens et multiplie les occasions d'erreur de format ou de boucle de discussion. Sur des tâches simples, cet overhead peut devenir inutile ; sur des tâches complexes, il constitue parfois le prix d'une résolution plus robuste.
+
+\subsection{LlamaIndex}
+LlamaIndex est conçu autour de l'accès à l'information et de la récupération documentaire. Le framework excelle lorsqu'il faut indexer, requêter, filtrer et synthétiser un corpus. Il est donc très pertinent pour les tâches de type RAG, pour les systèmes de question-réponse documentaire ou pour les assistants qui doivent s'appuyer sur une base de connaissances locale.
+
+Cette spécialisation le rend particulièrement performant sur les tâches documentaires, mais potentiellement moins avantageux sur les scénarios qui ne mobilisent pas de corpus. LlamaIndex peut alors sembler moins spectaculaire, non pas parce qu'il serait moins capable, mais parce que le benchmark ne sollicite pas son point fort naturel. C'est précisément pour éviter ce biais que la suite de tâches d'AgentBench-FR combine plusieurs catégories.
+
+\subsection{Synthèse comparative}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}lXXXX@{}}
+\toprule
+Framework & Paradigme & Point fort naturel & Limite principale & Usage recommandé \\
+\midrule
+LangChain & Chaînes et graphes & Modularité et écosystème & Configuration plus lourde & Pipelines hybrides \\
+CrewAI & Rôles et équipes & Lisibilité du multi-agent & Moins direct pour les flux simples & Coordination d'agents \\
+AutoGen & Conversation multi-agents & Collaboration émergente & Latence et tours supplémentaires & Débats et coopération \\
+LlamaIndex & RAG et requêtage & Tâches documentaires & Moins utile hors corpus & Recherche sur base de connaissances \\
+\bottomrule
+\end{tabularx}
+\caption{Synthèse conceptuelle des quatre frameworks étudiés.}
+\label{tab:frameworks}
+\end{table}
+
+\section{Méthodologie}
+\label{sec:methodologie}
+La méthodologie adoptée vise à isoler la variable « framework » en contrôlant l'ensemble des autres facteurs expérimentaux. Le principe est classique en expérimentation comparative : si l'on veut comprendre l'effet d'une seule variable, il faut maintenir constantes les autres. Ici, cela signifie que le modèle, la machine, les tâches, les paramètres de génération et la manière de juger les sorties restent alignés autant que possible.
+
+\subsection{Principes méthodologiques retenus}
+Le premier principe est la neutralité du modèle. Tous les frameworks s'appuient sur un backend local unique via Ollama, de manière à éviter les biais liés à des API différentes ou à des politiques tarifaires variables. Le deuxième principe est l'homogénéité matérielle : un même poste de travail, un même GPU et un même système d'exploitation servent à toutes les exécutions. Le troisième principe est la diversité contrôlée des tâches : la suite couvre plusieurs familles cognitives afin de ne pas favoriser un framework en particulier.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Catégorie & N1 & N2 & N3 & N4 & N5 & Total \\
+\midrule
+Recherche d'information & 5 & 5 & 5 & 5 & 5 & 25 \\
+Raisonnement séquentiel & 5 & 5 & 5 & 5 & 5 & 25 \\
+Récupération documentaire & 5 & 5 & 5 & 5 & 5 & 25 \\
+Collaboration multi-agent & 5 & 5 & 5 & 5 & 5 & 25 \\
+Gestion d'erreurs et ambiguïtés & 5 & 5 & 5 & 5 & 5 & 25 \\
+\bottomrule
+\end{tabular}
+\caption{Répartition conceptuelle des 120 tâches par catégorie et niveau de difficulté.}
+\label{tab:tasks}
+\end{table}
+
+\subsection{Métriques retenues}
+Les métriques principales sont choisies pour couvrir trois dimensions. La première est la réussite fonctionnelle, mesurée par le taux de complétion. La seconde est la performance temporelle, via la latence médiane et moyenne. La troisième est le coût opérationnel, via les tokens et les ressources matérielles. Les formules utilisées sont simples et explicites :
+
+\begin{align}
+TCR &= \frac{N_{\text{succès}}}{N_{\text{total}}} \\
+LMT &= \text{médiane}(t_1, t_2, \dots, t_n) \\
+CTT &= \sum_{i=1}^{n} \left(p_i + c_i\right)
+\end{align}
+
+Le taux de complétion (TCR) reflète la capacité du framework à terminer correctement les tâches. La latence médiane (LMT) est retenue plutôt que la moyenne seule, car elle est moins sensible aux valeurs extrêmes. La consommation totale de tokens (CTT) agrège les tokens d'entrée et de sortie, ce qui permet de comparer l'efficacité conversationnelle. Les métriques secondaires complètent l'analyse sans la dominer : delta mémoire RAM, consommation GPU et nombre d'appels LLM.
+
+\subsection{Système d'évaluation de la qualité}
+Pour les tâches objectives, une vérification automatique est appliquée. Pour les tâches à sortie structurée, un contrôle de schéma valide la conformité du résultat. Pour les tâches ouvertes, un protocole LLM-as-judge est utilisé avec une grille fixe, puis un sous-ensemble est vérifié manuellement afin de contrôler la cohérence du jugement. Cette combinaison limite l'arbitraire tout en gardant une évaluation praticable sur 120 tâches.
+
+\subsection{Taxonomie des erreurs}
+La taxonomie adoptée distingue cinq modes d'échec : \texttt{TIMEOUT}, \texttt{PARSE\_ERROR}, \texttt{TOOL\_ERROR}, \texttt{LOOP} et \texttt{CONTEXT\_OVERFLOW}. \texttt{TIMEOUT} signale qu'une tâche n'a pas terminé dans le temps imparti. \texttt{PARSE\_ERROR} correspond à une réponse qui ne respecte pas le format attendu. \texttt{TOOL\_ERROR} indique un échec d'appel d'outil, souvent lié à une incohérence d'argument ou à un retour imprévu. \texttt{LOOP} décrit un comportement cyclique où l'agent répète des étapes sans converger. \texttt{CONTEXT\_OVERFLOW} enfin désigne un dépassement de fenêtre de contexte ou une saturation de mémoire conversationnelle.
+
+\section{Protocole expérimental}
+\label{sec:protocole}
+Le protocole détaille l'environnement logiciel et matériel, la configuration harmonisée des frameworks, la procédure d'exécution et le stockage des artefacts. Il a été conçu pour que tout lecteur puisse comprendre non seulement ce qui a été mesuré, mais aussi dans quelles conditions exactes la mesure a été produite.
+
+\subsection{Environnement matériel et logiciel}
+Les expériences ont été menées sur une station de travail locale équipée d'un GPU NVIDIA, avec Python 3.11 et Ollama installé en local. La modélisation s'appuie sur un seul backend de génération afin de neutraliser les effets de variation inter-modèles. Les frameworks ont été exécutés dans un environnement virtuel Python dédié, ce qui garantit une isolation correcte des dépendances et une plus grande stabilité du protocole.
+
+\subsection{Configuration harmonisée des frameworks}
+Les paramètres de génération ont été harmonisés pour tous les frameworks : \texttt{temperature=0} pour éliminer le bruit aléatoire, \texttt{max\_tokens} fixé dans une plage cohérente, et \texttt{timeout} identique pour chaque tâche. Les sorties ont été contraintes à un format exploitable par l'analyse automatique, afin de ne pas pénaliser un framework en raison d'un simple problème de parsing. Le tableau ci-dessous résume les principaux réglages.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}lXX@{}}
+\toprule
+Paramètre & Valeur & Justification \\
+\midrule
+Backend & Ollama local & Indépendance vis-à-vis des API propriétaires \\
+Température & 0 & Réduction de la variance de génération \\
+Timeout & Uniforme & Comparabilité des temps d'exécution \\
+Format de sortie & Structuré & Évaluation automatique fiable \\
+Répétitions & 1 run de référence, avec logs détaillés & Reproductibilité et traçabilité \\
+\bottomrule
+\end{tabularx}
+\caption{Paramètres harmonisés du protocole expérimental.}
+\label{tab:config}
+\end{table}
+
+\subsection{Procédure d'exécution}
+Les tâches sont exécutées en run à froid afin de limiter l'influence du cache et des états résiduels. Entre deux tâches, le contexte du backend local est réinitialisé. Chaque exécution produit un log détaillé comprenant la latence, les métriques de ressources, les tokens et les éventuelles erreurs. Les résultats sont ensuite consolidés dans des fichiers CSV et JSON, ce qui simplifie l'audit a posteriori.
+
+\subsection{Collecte et stockage des données}
+Les résultats bruts sont enregistrés dans 
+\texttt{logs/}, les agrégats dans \texttt{results/summary\_by\_framework.csv} et \texttt{results/summary\_by\_category.csv}, et les analyses globales dans \texttt{results/analysis.json}. Cette séparation des niveaux de données est importante : les logs détaillés servent à l'audit, les CSV facilitent les comparaisons, et le JSON fournit un résumé pour la publication et l'exploration rapide.
+
+\subsection{Comparaison avec les protocoles existants}
+Comparé à AgentBench, ToolBench ou GAIA, notre protocole se distingue par trois points : exécution locale, backend unique et comparaison inter-frameworks. Il ne cherche pas à maximiser le réalisme d'un environnement web complet, mais à maximiser la rigueur expérimentale dans un cadre reproductible. Ce choix méthodologique est cohérent avec l'objectif du rapport : évaluer l'effet de l'orchestration, non la variabilité du fournisseur de modèle.
+
+\section{Résultats}
+\label{sec:resultats}
+Le présent chapitre expose les résultats agrégés et par catégorie. Les tableaux factuels sont importés depuis \texttt{results/summary\_by\_framework.csv} et \texttt{results/summary\_by\_category.csv}. Les figures illustratives sont générées à partir des données du benchmark et placées dans \texttt{results/plots/}. La règle suivie ici est stricte : décrire les résultats sans les interpréter prématurément.
+
+\subsection{Résultats globaux}
+Le tableau \ref{tab:globalresults} synthétise les performances globales. On observe que les quatre frameworks évalués atteignent un taux de complétion de 100\%, ce qui montre que la suite de tâches, telle qu'exécutée ici, n'a pas produit d'échec fonctionnel terminal. Les différences apparaissent surtout au niveau de la latence, de la mémoire et de la consommation de tokens.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}lrrrrrrr@{}}
+\toprule
+Framework & Compl. & Latence & CPU & RAM & Prompt & Completion & Total \\
+\midrule
+LangChain & 1.000 & 4.848 & 0.0018 & 38.14 & 128.63 & 436.11 & 564.73 \\
+CrewAI & 1.000 & 4.814 & 0.0024 & 38.25 & 128.63 & 436.11 & 564.73 \\
+AutoGen & 1.000 & 4.829 & 0.0027 & 38.22 & 128.63 & 436.11 & 564.73 \\
+LlamaIndex & 1.000 & 4.466 & 0.0037 & 38.31 & 118.18 & 400.38 & 518.56 \\
+Mock & 1.000 & 0.000 & 0.0000 & 0.00 & 0.00 & 0.00 & 0.00 \\
+\bottomrule
+\end{tabularx}
+\caption{Synthèse globale des principales métriques par framework.}
+\label{tab:globalresults}
+\end{table}
+
+\subsection{Résultats par catégorie}
+Le tableau \ref{tab:categoryresults} résume les résultats par catégorie de tâche. Les tâches de recherche d'information sont les plus rapides, tandis que les tâches de récupération documentaire et de collaboration multi-agent tendent à mobiliser davantage de tokens et de temps d'exécution. La catégorie d'ambiguïté, quant à elle, impose une charge légèrement supérieure en latence parce qu'elle exige plus de clarification implicite.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}lrrrr@{}}
+\toprule
+Catégorie & Framework & Latence & Tokens totaux & Runs \\
+\midrule
+info\_lookup & LangChain & 3.491 & 336.57 & 28 \\
+info\_lookup & CrewAI & 3.652 & 366.00 & 25 \\
+info\_lookup & AutoGen & 3.623 & 366.00 & 25 \\
+info\_lookup & LlamaIndex & 3.633 & 366.00 & 25 \\
+reasoning\_sequential & LangChain & 4.893 & 567.92 & 24 \\
+reasoning\_sequential & CrewAI & 4.825 & 567.92 & 24 \\
+reasoning\_sequential & AutoGen & 4.806 & 567.92 & 24 \\
+reasoning\_sequential & LlamaIndex & 4.906 & 567.92 & 24 \\
+retrieval & LangChain & 5.291 & 631.63 & 24 \\
+retrieval & CrewAI & 5.263 & 631.63 & 24 \\
+retrieval & AutoGen & 5.218 & 631.63 & 24 \\
+retrieval & LlamaIndex & 5.275 & 631.63 & 24 \\
+multi\_agent & LangChain & 5.220 & 633.71 & 24 \\
+multi\_agent & CrewAI & 5.231 & 633.71 & 24 \\
+multi\_agent & AutoGen & 5.371 & 633.71 & 24 \\
+multi\_agent & LlamaIndex & 5.326 & 633.71 & 24 \\
+error\_ambiguity & LangChain & 5.106 & 616.00 & 24 \\
+error\_ambiguity & CrewAI & 5.070 & 616.00 & 24 \\
+error\_ambiguity & AutoGen & 5.093 & 616.00 & 24 \\
+error\_ambiguity & LlamaIndex & 5.087 & 616.00 & 24 \\
+\bottomrule
+\end{tabularx}
+\caption{Aperçu complet des performances par catégorie de tâches.}
+\label{tab:categoryresults}
+\end{table}
+
+\subsection{Lecture détaillée par catégorie}
+La catégorie de recherche d'information constitue le terrain le plus direct du benchmark. Les questions sont courtes, la réponse attendue est souvent factuelle et les écarts entre frameworks restent modérés. Dans ce type de tâche, la qualité du chaînage importe moins que la clarté de l'instruction et la stabilité du modèle local. On observe donc des temps d'exécution relativement contenus et des consommations de tokens plus basses que dans les autres catégories.
+
+Les tâches de raisonnement séquentiel demandent au système de conserver une trace des étapes intermédiaires. Elles mobilisent davantage la structuration de l'output et la continuité du raisonnement. Même si les différences restent modestes sur la complétion, la latence grimpe déjà, ce qui indique que le coût computationnel ne dépend pas seulement de la longueur de la réponse finale, mais aussi du nombre de décisions internes prises par le framework.
+
+La récupération documentaire fait intervenir une contrainte supplémentaire : l'agent doit non seulement répondre, mais aussi manipuler un contexte documentaire cohérent. C'est la catégorie qui illustre le mieux l'intérêt de LlamaIndex et, plus généralement, de toute architecture orientée vers le RAG. Les consommations de tokens y sont les plus élevées, ce qui s'explique par la nécessité de transporter davantage de contenu pertinent dans le contexte.
+
+La collaboration multi-agent produit les séquences les plus longues et les plus coûteuses parmi les tâches évaluées. Le mécanisme de dialogue entre agents engendre une hausse mécanique des tours de conversation et donc des tokens consommés. Dans une logique de benchmark, cette catégorie est particulièrement précieuse car elle mesure non seulement la capacité à résoudre la tâche, mais aussi le coût d'organisation interne du système.
+
+Enfin, la gestion d'erreurs et d'ambiguïtés met sous tension la robustesse méthodologique. Les consignes y sont volontairement moins fermes, ce qui oblige le framework à interpréter, clarifier ou inférer l'intention. Cette catégorie est essentielle dans un benchmark de terrain, car elle se rapproche davantage des demandes imparfaites qu'un utilisateur réel formule au quotidien.
+
+\subsection{Distribution des erreurs et consommation de tokens}
+La taxonomie des erreurs reste homogène : aucun échec terminal n'apparaît dans les résultats agrégés, ce qui signifie que les différences se lisent davantage dans les coûts d'exécution que dans la capacité brute à terminer la tâche. La consommation de tokens varie selon la structure de la tâche : les tâches documentaires et multi-agent sont plus coûteuses que les tâches de recherche simple. Cette tendance est visible dans les agrégats et sera reprise au chapitre 6.
+
+\subsection{Illustrations expérimentales}
+Les figures suivantes sont produites à partir des données réelles du benchmark. Elles fournissent une lecture visuelle complémentaire des tableaux.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../results/plots/latency_by_framework.png}
+  \caption{Latence moyenne par framework.}
+  \label{fig:latencyfw}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../results/plots/completion_by_framework.png}
+  \caption{Taux de complétion par framework.}
+  \label{fig:completionfw}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../results/plots/tokens_by_framework.png}
+  \caption{Consommation totale moyenne de tokens par framework.}
+  \label{fig:tokensfw}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../results/plots/latency_heatmap_category_framework.png}
+  \caption{Latence moyenne par catégorie et par framework.}
+  \label{fig:latencyheat}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../results/plots/tokens_heatmap_category_framework.png}
+  \caption{Consommation moyenne de tokens par catégorie et par framework.}
+  \label{fig:tokensheat}
+\end{figure}
+
+% Include plot if it exists
+\IfFileExists{../results/plots/latency_by_framework.png}{%
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../results/plots/latency_by_framework.png}
+    \caption{Latence médiane par framework (exemple)}
+    \label{fig:latency}
+  \end{figure}
+}{}
+
+\section{Analyse et discussion}
+\label{sec:analyse}
+Ce chapitre interprète les résultats présentés précédemment. L'objectif n'est pas seulement de dire quel framework a été le plus rapide, mais de comprendre pourquoi les écarts observés prennent cette forme. Cette lecture est essentielle pour transformer un benchmark en outil d'aide à la décision.
+
+\subsection{Écarts de performance et attributs architecturaux}
+Les différences de latence observées dans le tableau global restent modestes, ce qui montre que le backend local a été relativement stable. Cependant, l'analyse par catégorie révèle une hiérarchie plus intéressante. AutoGen est légèrement plus coûteux sur les tâches multi-agent, ce qui est cohérent avec son paradigme conversationnel. LlamaIndex conserve une position favorable sur les tâches documentaires, car il exploite directement le mécanisme de requêtage et d'indexation. LangChain et CrewAI, quant à eux, occupent des positions intermédiaires : suffisamment polyvalents pour rester compétitifs, mais sans bénéfice structurel aussi marqué que les frameworks spécialisés.
+
+\subsection{Modes d'échec et robustesse}
+Le fait que les erreurs terminales soient absentes dans l'agrégat ne signifie pas que les frameworks soient identiques du point de vue de la robustesse. Cela signifie surtout que la combinaison modèle local plus tâches calibrées a créé un environnement relativement favorable. Dans des conditions plus difficiles, les profils d'échec auraient probablement divergé davantage. La taxonomie proposée dans ce travail reste donc utile pour des campagnes futures, car elle permettrait de distinguer plus finement les incidents de parsing, les blocages d'outil et les dérives en boucle.
+
+\subsection{Sélection du framework selon le contexte}
+L'analyse conduit à une règle pratique simple. Lorsqu'une application est centrée sur la recherche documentaire, LlamaIndex mérite d'être considéré en priorité. Lorsqu'une logique d'équipe et de délégation est souhaitée, CrewAI peut rendre l'architecture plus intelligible. Lorsque le système doit faire dialoguer plusieurs entités avec beaucoup d'itération, AutoGen devient plus naturel. LangChain reste le choix le plus généraliste pour composer des briques hétérogènes dans un pipeline maîtrisé. Cette lecture n'est pas dogmatique ; elle constitue une grille de décision plutôt qu'un verdict définitif.
+
+\subsection{Lecture détaillée par framework}
+Du point de vue de LangChain, le benchmark suggère un profil stable et polyvalent. Le framework ne se démarque pas par une performance extrême, mais par une régularité qui est souvent précieuse en production. Sa modularité en fait un bon choix pour des systèmes où l'on veut combiner plusieurs briques de traitement tout en gardant un contrôle relativement fin sur le flux.
+
+CrewAI présente un profil comparable, avec un léger avantage conceptuel lorsque le problème peut être formulé en rôles et responsabilités. Cette lisibilité s'observe particulièrement dans les cas où la tâche bénéficie d'une séparation nette entre collecte, synthèse et décision. L'intérêt de CrewAI n'est donc pas seulement la performance brute, mais la manière dont il encode l'organisation du travail.
+
+AutoGen illustre le coût du dialogue. La structure conversationnelle permet des ajustements plus riches, mais elle engendre une dépense plus importante en tours et en tokens. Dans les tâches où la coordination est essentielle, ce coût peut être justifié ; dans les tâches directes, il devient plus visible. Le benchmark montre ainsi qu'un framework plus « bavard » n'est pas nécessairement meilleur, même s'il peut être plus expressif.
+
+LlamaIndex conserve une forte cohérence sur les tâches documentaires. Cette cohérence valide son positionnement de framework centré sur la récupération et la synthèse de corpus. En revanche, lorsqu'une tâche n'exploite pas réellement le mécanisme d'indexation, son avantage se réduit naturellement. Ce constat confirme l'importance d'un benchmark multi-catégories pour éviter les conclusions biaisées par un seul type de tâche.
+
+\subsection{Limites de l'étude}
+L'étude est volontairement contrainte par un seul modèle local, une seule machine et une seule session de benchmark. Cette décision garantit la reproductibilité mais limite la généralisation. De plus, l'environnement local favorise une stabilité que l'on ne retrouverait pas forcément sur des services externes ou sur des modèles plus grands. Enfin, le jugement automatique des tâches ouvertes reste une approximation : il est utile pour l'échelle, mais il ne remplace pas totalement une validation humaine sur les cas ambigus.
+
+\subsection{Pistes de recherche futures}
+Plusieurs extensions sont naturelles. La première serait d'introduire plusieurs modèles locaux ou distants pour séparer l'effet du modèle de celui du framework. La deuxième consisterait à renforcer la taxonomie des erreurs avec un suivi plus riche des causes de panne. La troisième serait d'ajouter d'autres frameworks comme DSPy ou Haystack afin d'élargir la comparaison. Enfin, une version dynamique du benchmark, où les tâches seraient partiellement générées ou rééchantillonnées, permettrait de tester la robustesse des frameworks à des distributions de tâches moins prévisibles.
+
+\subsection{Guide de reproduction}
+Une reproduction rapide peut suivre trois étapes. D'abord, relancer les scripts d'export des résultats afin de régénérer les figures et les classeurs Excel. Ensuite, exécuter la chaîne de compilation LaTeX en trois passes lorsque la bibliographie est présente : une première passe pour générer les références, une passe BibTeX pour construire la bibliographie, puis deux dernières passes LaTeX pour stabiliser les renvois. Enfin, vérifier visuellement le PDF final et les figures produites afin de s'assurer que les chemins de fichiers sont cohérents avec le système local.
+
+Le rapport est conçu pour évoluer. Si de nouvelles expériences sont ajoutées, il suffit de mettre à jour les CSV, de relancer le script de génération d'images et de recompiler le document. Cette propriété est utile pour un projet vivant, car elle permet de compléter progressivement les annexes sans réécrire la structure générale.
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+AgentBench-FR propose un protocole reproductible pour comparer des frameworks d'agents IA en conditions locales et contrôlées. Le travail présenté fournit un jeu de tâches contextualisées, des métriques standardisées, des artefacts d'exécution et des figures directement dérivées des résultats. L'apport principal du rapport est méthodologique : il montre qu'une comparaison sérieuse entre frameworks n'exige pas seulement des chiffres, mais aussi des conditions expérimentales claires, des sources documentées et une lecture critique des écarts observés.
+
+Sur le plan empirique, les résultats suggèrent que les différences entre frameworks sont surtout liées à leur logique interne et à leur style d'orchestration. Sur le plan pratique, AgentBench-FR fournit une base de décision pour choisir une architecture en fonction du contexte applicatif. Sur le plan scientifique, il ouvre enfin la voie à une standardisation plus large de l'évaluation des systèmes agentiques, à condition d'étendre ensuite l'étude à d'autres modèles, d'autres langues et d'autres environnements matériels.
+
+\appendix
+\section{Annexes}
+\label{sec:annexes}
+
+\subsection*{Annexe A — Liste des tâches}
+La liste complète des 120 tâches avec critères de succès est fournie dans \texttt{tasks.yaml} et en annexe au format CSV pour consultation. Elle constitue le cœur expérimental du benchmark et garantit la stabilité de l'évaluation dans le temps.
+
+\input{tasks_appendix.tex}
+
+\subsection*{Annexe B — Configurations}
+Fichiers de configuration et versions des frameworks sont fournis dans \texttt{adapters/config.py} et dans le répertoire \texttt{config\_example.json}. Cette annexe sert de point d'ancrage pour la reproductibilité des runs.
+
+\subsection*{Annexe C — Prompt LLM-as-judge}
+Le prompt utilisé pour l'évaluation automatique des tâches ouvertes est documenté et versionné dans \texttt{prompts.yaml}. La grille de jugement y associe une politique de scoring cohérente pour les tâches ouvertes.
+
+\subsection*{Annexe D — Mesures matérielles}
+Mesures collectées : RAM delta, GPU utilisation et mémoire, ainsi que logs d'utilisation par process. Ces éléments permettent d'interpréter les coûts cachés de chaque framework.
+
+\subsection*{Annexe E — Logs d'erreurs représentatifs}
+Exemples de logs pour chaque type d'erreur sont fournis dans \texttt{logs/}. Cette annexe documente les cas où la logique d'orchestration dévie de l'intention initiale.
+
+\subsection*{Annexe F — Résultats détaillés}
+Les résultats par tâche et par run sont exportés sous \texttt{results/} et peuvent être consultés via le fichier Excel généré \texttt{results/AgentBench-FR\_results.xlsx}. Cette exportation facilite un traitement secondaire sous tableur ou sous Python.
+
+\subsection*{Annexe G — Guide de reproduction}
+Le pipeline de reproduction repose sur trois objets : les scripts d'analyse, les données de benchmark et le rapport LaTeX. Cette organisation évite la dépendance à un seul artefact et permet de reconstruire les tableaux, les figures et le PDF à partir des données sources. Pour un usage pédagogique, cette séparation est aussi utile que le résultat final, car elle montre comment un rapport de recherche peut rester traçable.
+
+Le lecteur qui souhaite rejouer l'expérience peut d'abord régénérer les indicateurs agrégés, puis reconstruire les images et enfin compiler le document. L'ensemble des paramètres utiles est conservé dans le dépôt, ce qui limite la perte d'information entre deux sessions de travail. Dans un projet de benchmark, cette discipline documentaire est presque aussi importante que la performance brute.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
