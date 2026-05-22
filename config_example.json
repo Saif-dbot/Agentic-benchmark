@@ -1,32 +1,9 @@
 {
-  "llm_provider": "openai",
-  "api_key_env": "OPENAI_API_KEY",
-  "model": "gpt-4o",
+  "llm_provider": "ollama",
+  "model": "phi3:mini",
   "temperature": 0.0,
   "max_tokens": 512,
   "timeout": 60,
+  "base_url": "http://localhost:11434",
   "max_retries": 3
 }
-
-# Alternatives:
-# {
-#   "llm_provider": "anthropic",
-#   "api_key_env": "ANTHROPIC_API_KEY",
-#   "model": "claude-3-opus-20240229",
-#   "temperature": 0.0,
-#   "max_tokens": 512,
-#   "timeout": 60,
-#   "max_retries": 3
-# }
-#
-# {
-#   "llm_provider": "azure",
-#   "api_key_env": "AZURE_OPENAI_API_KEY",
-#   "endpoint_env": "AZURE_OPENAI_ENDPOINT",
-#   "model": "gpt-4o",
-#   "api_version": "2024-02-15-preview",
-#   "temperature": 0.0,
-#   "max_tokens": 512,
-#   "timeout": 60,
-#   "max_retries": 3
-# }

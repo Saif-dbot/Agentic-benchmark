@@ -66,6 +66,8 @@ if __name__ == '__main__':
         )
         if code != 0:
             print('Framework run failed:', framework)
+        else:
+            print('Framework completed:', framework)
 
     print('=== Running analysis ===')
     run_analysis(args.output_dir, 'results')

@@ -12,6 +12,7 @@ REQUIRED_KEYS = {
     "latency_seconds",
     "error",
     "metadata",
+    "token_metrics",
 }
 
 

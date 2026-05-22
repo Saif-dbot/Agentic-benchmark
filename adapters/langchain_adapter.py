@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import os
 from typing import Any
 
 from .base_adapter import AgentAdapter
 from .config import load_config
+from .local_backend import extract_token_metrics, localize_prompt, ollama_generate_from_config
 
 
 class LangChainAdapter(AgentAdapter):
@@ -13,7 +13,7 @@ class LangChainAdapter(AgentAdapter):
 
     def run(self, task: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
         started = self._start_timer()
-        prompt = str(task.get("prompt", ""))
+        prompt = localize_prompt(str(task.get("prompt", "")))
         mode = str(config.get("mode", "mock")).lower()
 
         if mode != "real":
@@ -27,29 +27,16 @@ class LangChainAdapter(AgentAdapter):
                 response=response,
                 started_at=started,
                 metadata={"mode": mode},
+                token_metrics={},
             )
 
         try:
-            try:
-                runtime_cfg = load_config()
-            except Exception:
-                runtime_cfg = {}
-
-            model_name = str(runtime_cfg.get("model", "gpt-4o-mini"))
-            temperature = float(runtime_cfg.get("temperature", 0.2))
-            api_key_env = str(runtime_cfg.get("api_key_env", "OPENAI_API_KEY"))
-            api_key = os.getenv(api_key_env, "")
-
-            if not api_key:
-                raise RuntimeError(
-                    f"API key absente: variable d'environnement '{api_key_env}' non definie"
-                )
-
-            from langchain_openai import ChatOpenAI
-
-            llm = ChatOpenAI(model=model_name, temperature=temperature, api_key=api_key)
-            output = llm.invoke(prompt)
-            response_text = str(getattr(output, "content", "") or "")
+            runtime_cfg = load_config()
+            response_text, raw = ollama_generate_from_config(prompt, runtime_cfg)
+            model_name = str(runtime_cfg.get("model", "phi3:mini"))
+            temperature = float(runtime_cfg.get("temperature", 0.0))
+            base_url = str(runtime_cfg.get("base_url", "http://localhost:11434"))
+            token_metrics = extract_token_metrics(raw)
 
             return self._build_result(
                 task=task,
@@ -60,8 +47,11 @@ class LangChainAdapter(AgentAdapter):
                     "mode": mode,
                     "model": model_name,
                     "temperature": temperature,
-                    "api_key_env": api_key_env,
+                    "backend": "ollama",
+                    "base_url": base_url,
+                    "raw_keys": sorted(raw.keys()),
                 },
+                token_metrics=token_metrics,
             )
         except Exception as exc:
             return self._build_result(
@@ -70,5 +60,6 @@ class LangChainAdapter(AgentAdapter):
                 response="",
                 started_at=started,
                 error=str(exc),
-                metadata={"mode": mode},
+                metadata={"mode": mode, "backend": "ollama"},
+                token_metrics={},
             )

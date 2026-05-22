@@ -34,6 +34,7 @@ class AgentAdapter(ABC):
         tool_calls: list[dict[str, Any]] | None = None,
         error: str | None = None,
         metadata: dict[str, Any] | None = None,
+        token_metrics: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         return {
             "framework": self.framework_name,
@@ -45,4 +46,5 @@ class AgentAdapter(ABC):
             "latency_seconds": round(perf_counter() - started_at, 6),
             "error": error,
             "metadata": metadata or {},
+            "token_metrics": token_metrics or {},
         }

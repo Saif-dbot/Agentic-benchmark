@@ -67,6 +67,7 @@ def main() -> int:
     parser.add_argument("--mode", default="mock", choices=["mock", "real"])
     parser.add_argument("--timeout", type=int, default=60)
     parser.add_argument("--log-level", default="INFO")
+    parser.add_argument("--no-progress", action="store_true", help="Disable per-task progress output")
     args = parser.parse_args()
 
     adapter_name = args.adapter or args.framework
@@ -86,7 +87,11 @@ def main() -> int:
             raise ValueError(f"Task not found: {args.task}")
 
     runner = BenchmarkRunner(adapter=adapter, mode=args.mode)
-    results = runner.execute(tasks=tasks, repeats=args.repeats)
+    print(
+        f"Starting benchmark for {adapter_name}: {len(tasks)} task(s) x {args.repeats} repeat(s)",
+        flush=True,
+    )
+    results = runner.execute(tasks=tasks, repeats=args.repeats, progress=not args.no_progress)
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     log_file = logs_dir / f"benchmark_{adapter_name}_{timestamp}.json"
@@ -104,6 +109,7 @@ def main() -> int:
     auto_archive(logs_dir)
 
     print(f"Saved benchmark log: {log_file}")
+    print(f"Completed benchmark for {adapter_name}: {len(results)}/{len(results)} run(s)")
     return 0
 
 

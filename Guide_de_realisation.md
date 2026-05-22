@@ -11,18 +11,120 @@ Ce guide se divise en deux parties distinctes:
 
 ## Étapes à suivre
 
-- Définir clairement l'objectif du benchmark: comparer LangChain, CrewAI, AutoGen et LlamaIndex sur la complétion, la latence, la robustesse et la consommation de ressources.
+- Définir clairement l'objectif du benchmark: comparer LangChain, CrewAI, AutoGen et LlamaIndex sous un même modèle local, sur la complétion, la latence, la robustesse et la consommation de ressources.
 - Reprendre les hypothèses du sujet: AutoGen performant en multi-agent, LangChain flexible, CrewAI orienté rôles, LlamaIndex fort sur la récupération documentaire.
 - Préparer l'environnement Python et installer les dépendances.
-- Créer le fichier de configuration local `config.json` avec les clés API et les paramètres du modèle.
+- Créer le fichier de configuration local `config.json` avec les paramètres du modèle local et, si besoin, la configuration Ollama.
 - Choisir le framework à tester et lui associer un adaptateur commun.
-- Intégrer les API des agents en respectant la même structure d'entrée et de sortie pour tous.
+- Intégrer les backends locaux des agents en respectant la même structure d'entrée et de sortie pour tous.
 - Préparer les 120 tâches du benchmark dans `tasks.yaml` en respectant les 5 catégories: recherche d'information, raisonnement séquentiel, récupération documentaire, multi-agent, ambiguïtés et erreurs contrôlées.
 - Préparer les prompts associés dans `prompts.yaml` en gardant le même objectif métier pour chaque framework.
-- Lancer les exécutions avec les mêmes paramètres pour tous les frameworks: même modèle, même température, même limite de tokens, même budget d'outils, même timeout et même nombre d'essais.
+- Lancer les exécutions avec les mêmes paramètres pour tous les frameworks: même modèle local, même température, même limite de tokens, même budget d'outils, même timeout et même nombre d'essais.
 - Sauvegarder les réponses, les appels outils, les erreurs, la latence et les métadonnées dans des logs horodatés.
 - Comparer les résultats obtenus entre les frameworks avec les métriques du sujet: taux de complétion, latence moyenne, consommation de ressources et résilience aux erreurs.
 - Préparer la synthèse finale et la mise en forme PDF du mémoire ou du rapport.
+
+## Priorisation et etat actuel
+
+Ce tableau sert a piloter la suite du projet en indiquant l'importance de chaque bloc, son etat reel et la prochaine action utile.
+
+| Bloc | Importance | Etat actuel | Prochaine action |
+|---|---|---|---|
+| Environnement et configuration | Haute | Presque complet | Verifier l'execution locale avec Ollama et un modele unique |
+| Adaptateurs | Critique | Squelette en place, mode mock OK | Brancher chaque framework sur le meme backend local |
+| Taches et prompts | Haute | Presque complet | Ajouter des criteres de reussite explicites et reproductibles |
+| Protocole d'execution | Critique | Mock fonctionnel | Figer la campagne locale de reference |
+| Metriques | Haute | En place, a valider | Verifier les valeurs CPU, RAM et GPU sur plusieurs runs |
+| Analyse | Haute | En cours | Integrer les mesures de ressources et les vues par categorie |
+| Rapport | Moyenne | En preparation | Rediger les chapitres a partir des resultats valides |
+| Rapport HTML interactif | Faible | Non implemente | Le garder optionnel ou le supprimer |
+
+## Taches a modifier, retirer ou ajouter
+
+- Remplacer toutes les formulations qui parlent de cle API par une configuration locale Ollama tant que le projet reste 100% gratuit.
+- Modifier la definition de la consommation de ressources pour la traiter comme une metrique distincte de la latence.
+- Ajouter a chaque tache un critere de reussite objectif pour rendre le taux de completude reproductible.
+- Convertir les adaptateurs mock en adaptateurs reels locaux, ou les conserver seulement comme filet de secours.
+- Ajouter une tache de verification d'Ollama et du modele local avant tout lancement reel.
+- Garder le rapport HTML interactif comme optionnel; il ne doit pas bloquer la fin du projet.
+
+## Premiere tache prioritaire avant lancement complet
+
+1. Ajouter la metrique de consommation de tokens (M5) dans les logs, l'analyse et les tableaux de synthese.
+2. Definir un critere de reussite objectif pour chaque tache afin de rendre le taux de completude reproductible.
+3. Verifier la stabilite des mesures CPU, RAM et GPU sur plusieurs runs consecutifs.
+
+## Taches de decision a faire valider par un LLM
+
+- Decider si le rapport HTML interactif doit etre conserve ou supprime.
+- Decider si les runs doivent etre consideres comme a froid, a chaud, ou documentes en deux modes.
+- Decider quelle taxonomie minimale d'erreurs doit etre retenue dans le rapport final.
+- Decider si les metriques CPU/RAM/GPU restent en annexe ou passent dans le corps principal du rapport.
+- Decider si l'evaluation des taches ouvertes doit utiliser un LLM-as-judge externe ou uniquement des taches a reponse objective.
+
+## Arbitrage methodologique retenu
+
+Les decisions suivantes cadrent le protocole final du projet et doivent etre appliquees avant le lancement complet du benchmark.
+
+1. **Rapport HTML interactif**: a conserver uniquement comme livrable annexe et comme support de consultation, pas comme contribution principale.
+2. **Runs**: a effectuer en mode a froid uniquement, avec contexte Ollama reinitialise entre les taches.
+3. **Taxonomie des erreurs**: limiter le noyau principal a `TIMEOUT`, `PARSE_ERROR`, `TOOL_ERROR`, `LOOP`, `CONTEXT_OVERFLOW`, avec `UNKNOWN` en secours.
+4. **CPU, RAM, GPU**: a documenter en cout d'infrastructure et en annexe, avec une mention resumee dans le tableau final.
+5. **Qualite de reponse**: utiliser un `LLM-as-judge` externe pour les taches ouvertes, avec un echantillon de validation manuelle.
+6. **Tokens**: les traiter comme metrique principale au meme titre que le taux de completude et la latence mediane.
+
+## Plan de lancement du projet
+
+Avant de lancer la campagne complete, respecter cet ordre:
+
+1. Verifier que le modele Ollama local `phi3:mini` repond correctement sur une tache test.
+2. Valider la stabilite des quatre adaptateurs en mode reel local.
+3. Ajouter et verifier la metrique de consommation de tokens dans les logs et l'analyse.
+4. Confirmer que chaque tache dispose d'un critere de reussite objectif.
+5. Lancer la campagne complete sur les 120 taches avec les memes parametres pour tous les frameworks.
+6. Generer les tableaux et graphiques finaux.
+7. Passer ensuite a la redaction du rapport en s'appuyant uniquement sur les resultats valides.
+
+## Passage au rapport
+
+Le rapport doit etre redige une fois le benchmark complet termine et valide. La transition vers la partie rapport se fait apres:
+
+- la validation des scores de completude;
+- la validation des metriques de ressources;
+- la consolidation des resultats par framework et par categorie;
+- la fixation des decisions metodologiques finales.
+
+Les chapitres du rapport doivent reprendre les resultats produits par le protocole final, sans rediscuter les choix techniques deja figes sauf en section methode.
+
+## Metriques de benchmark
+
+Cette section precise les metriques a conserver dans le projet pour que l'evaluation reste reproductible et defendable dans le rapport.
+
+### Metriques principales
+
+- **Taux de completude**: mesure si la tache a ete resolue selon le critere de reussite defini a l'avance. C'est la metrique centrale du benchmark.
+- **Latence mediane par tache**: mesure le temps total entre le debut de la tache et la reponse finale, orchestration incluse.
+- **Nombre d'appels LLM**: compte le nombre total de generations effectuees pour une tache. Permet de comparer l'efficacite d'orchestration des frameworks.
+- **Taux et type d'erreur**: recense les echecs et leur taxonomie (timeout, parse error, tool error, boucle, contexte depasse, etc.).
+- **Consommation de tokens**: addition des tokens prompt et completion pour chaque tache, utile pour comparer la charge effective du modele local.
+
+### Metriques de cout d'infrastructure
+
+- **CPU moyen**: a conserver comme cout d'execution, pas comme score de performance principale.
+- **RAM utilisee**: a mesurer comme deltas memoire pendant l'execution.
+- **GPU**: mesurer l'utilisation et la memoire GPU si disponible, surtout avec la RTX 4090, pour documenter la charge d'inference.
+
+### Metriques secondaires
+
+- **Nombre d'appels d'outils**: utile sur les taches qui demandent du tool use.
+- **Temps au premier token**: utile pour analyser l'overhead de demarrage.
+- **Profondeur de raisonnement**: a garder en annexe car la definition varie selon les frameworks.
+
+### Regle de presentation
+
+- Les metriques principales vont dans le corps du rapport.
+- Les metriques de cout d'infrastructure vont dans les tableaux complementaires ou l'annexe.
+- Les metriques secondaires servent a expliquer les ecarts sans remplacer les metriques principales.
 
 ---
 
@@ -32,7 +134,7 @@ Cette partie énumère les tâches de développement, de configuration et d'exé
 
 ## 1. Objectif du projet
 
-Le but est de comparer plusieurs frameworks d'agents IA, notamment LangChain, CrewAI, AutoGen et LlamaIndex, sur des tâches identiques afin de mesurer :
+Le but est de comparer plusieurs frameworks d'agents IA, notamment LangChain, CrewAI, AutoGen et LlamaIndex, sur des tâches identiques, avec un seul modèle local partagé, afin de mesurer :
 
 - le taux de complétion,
 - la latence,
@@ -97,7 +199,7 @@ Les fichiers de référence du dépôt sont :
 
 Prochaine étape immédiate : démarrer la Phase 2 (structure des adaptateurs) avec un socle minimal exécutable.
 
-## 4. Intégration des API des agents
+## 4. Intégration des backends des agents
 
 Cette étape est la plus importante pour la réalisation concrète du benchmark. L'idée est de créer une couche d'abstraction commune qui permet d'appeler différents frameworks avec le même contrat d'entrée et de sortie.
 
@@ -109,7 +211,7 @@ Chaque framework doit être exposé derrière un adaptateur unique. Cet adaptate
 - des paramètres de génération,
 - éventuellement une liste d'outils,
 - éventuellement un contexte documentaire,
-- une configuration d'API.
+- une configuration locale.
 
 Il renvoie :
 
@@ -119,52 +221,47 @@ Il renvoie :
 - les erreurs éventuelles,
 - les métadonnées utiles à l'analyse.
 
-### 4.2 Configuration des accès API
+### 4.2 Configuration du modèle local
 
 Le fichier [config_example.json](config_example.json) montre une configuration minimale. En pratique, il faut créer un fichier local `config.json` non versionné contenant :
 
-- le fournisseur LLM,
-- la variable d'environnement de la clé API,
-- le nom du modèle,
+- le fournisseur local ou le backend utilisé,
+- le nom du modèle local,
 - la température,
 - la limite de tokens,
-- éventuellement les paramètres réseau ou de proxy.
+- éventuellement l'URL locale d'Ollama ou du service local équivalent.
 
 Exemple logique de configuration :
 
 ```json
 {
-  "llm_provider": "openai",
-  "api_key_env": "OPENAI_API_KEY",
-  "model": "gpt-4o",
-  "temperature": 0.0,
-  "max_tokens": 512
+   "llm_provider": "ollama",
+   "model": "phi3:mini",
+   "temperature": 0.0,
+   "max_tokens": 512,
+   "base_url": "http://localhost:11434"
 }
 ```
 
-La clé API ne doit jamais être écrite en dur dans le dépôt. Elle doit rester dans l'environnement local ou dans un gestionnaire de secrets.
+Dans cette version du projet, aucune clé API cloud n'est requise tant que l'exécution reste 100% locale.
 
-Pour le sujet actuel, il est conseillé de garder une configuration unique par campagne de test afin que tous les frameworks utilisent le même modèle et les mêmes paramètres.
+Pour le sujet actuel, il faut garder une configuration unique par campagne de test afin que tous les frameworks utilisent le même modèle local et les mêmes paramètres.
 
 **Checklist technique :**
 
 - [x] Créer `config.json` (local, non versionné) à partir de `config_example.json`
-- [x] Définir le fournisseur LLM (ex: openai, anthropic, azure)
-- [ ] Ajouter la clé API à la variable d'environnement (ne pas l'écrire en dur)
+- [x] Définir le fournisseur local LLM (ex: ollama)
 - [x] Tester la connexion: `python -c "from adapters.config import load_config; cfg=load_config(); print(cfg)"`
-- [x] Documenter la clé API attendue dans le `.gitignore` ou un fichier de secrets
+- [x] Documenter la configuration locale dans le `.gitignore` ou un fichier de secrets
 
-### 4.3 Variables d'environnement
+### 4.3 Variables d'environnement locales
 
-Selon le fournisseur choisi, prévoir par exemple :
+Selon le backend local choisi, prévoir par exemple :
 
-- `OPENAI_API_KEY`,
-- `ANTHROPIC_API_KEY`,
-- `AZURE_OPENAI_API_KEY`,
-- `AZURE_OPENAI_ENDPOINT`,
-- `GOOGLE_API_KEY`.
+- `OLLAMA_HOST`,
+- `OLLAMA_MODELS`.
 
-L'adaptateur doit lire la bonne variable à partir de la configuration.
+Les adaptateurs doivent lire la configuration locale et éviter toute dépendance à une clé API externe tant que le benchmark reste gratuit.
 
 ### 4.4 Structure de l'adaptateur
 
@@ -247,10 +344,10 @@ LlamaIndex doit être utilisé surtout pour la récupération documentaire et le
 
 **Checklist technique par framework :**
 
-- [ ] LangChain: tester avec `AgentExecutor` + outils + logs
-- [ ] CrewAI: tester avec 2-3 rôles d'agents + mission
-- [ ] AutoGen: tester avec dialogue multi-agents
-- [ ] LlamaIndex: tester avec indexation et récupération
+- [ ] LangChain: tester en mode reel local avec `AgentExecutor` + outils + logs
+- [ ] CrewAI: tester en mode reel local avec 2-3 roles d'agents + mission
+- [ ] AutoGen: tester en mode reel local avec dialogue multi-agents
+- [ ] LlamaIndex: tester en mode reel local avec indexation et recuperation
 
 ### 4.6 Correspondance avec le sujet
 
@@ -268,6 +365,13 @@ Le sujet impose une lecture comparative et reproductible. Le guide doit donc con
 - [x] Créer un fichier `metrics.py` qui définit les axes d'évaluation
 - [x] Ajouter un logging JSON structuré pour chaque métrique
 - [x] Tester que chaque adaptateur loggue correctement
+
+Pour la consommation de ressources, il faut prévoir une mesure séparée du CPU, de la RAM, et si disponible du GPU, afin de ne pas confondre ces valeurs avec la latence.
+
+**A faire en priorite :**
+
+- Valider la stabilite des mesures CPU/RAM/GPU sur plusieurs executions.
+- Ajouter une grille de scoring explicite pour la completude de chaque type de tache.
 
 ### 4.7 Pont commun entre frameworks
 
@@ -287,6 +391,8 @@ Cela permet une comparaison plus juste.
 - [x] Implémenter un système de logs JSON commun
 - [x] Créer un fichier `logs/benchmark_YYYY-MM-DD_HHMMSS.json`
 - [x] Tester: `python benchmark.py --framework langchain --repeats 1 --task T1`
+
+**Etat actuel :** le runner existe et le mode mock fonctionne, mais le mode reel doit encore etre aligne sur le meme backend local pour tous les frameworks.
 
 ## 5. Préparer les tâches et les prompts
 
@@ -323,6 +429,8 @@ Bonnes pratiques :
 - éviter les indices propres à un framework,
 - préciser le format de sortie attendu.
 
+**Tache a ajouter :** definir pour chaque tache un critere de reussite objective (reponse exacte, JSON valide ou regle binaire) afin de rendre le taux de completude reproductible.
+
 ## 6. Définir le protocole d'exécution
 
 Le fichier [run_all.py](run_all.py) orchestre les exécutions. Le principe attendu est :
@@ -347,6 +455,8 @@ Pour obtenir des résultats comparables, il faut fixer :
 - [x] Tester le mode mock: `python run_all.py --frameworks mock --repeats 2 --mode mock`
 - [x] Créer un script `run_benchmark.sh` pour lancer la campagne complète
 - [x] Documentez les paramètres fixes: température, max_tokens, timeout par tâche
+
+**Tache a faire ensuite :** figer une campagne locale de reference avec un seul modele Ollama, puis lancer les memes taches pour chaque framework.
 
 ## 7. Collecte et traçabilité des résultats
 
@@ -380,6 +490,7 @@ Une fois les expériences terminées, comparer les frameworks selon :
 - le taux de réussite,
 - le taux d'erreur,
 - la latence moyenne,
+- la consommation de ressources (CPU, RAM, GPU si disponible),
 - le nombre d'appels outils,
 - la qualité des réponses,
 - la robustesse sur les tâches multi-agents.
@@ -407,7 +518,9 @@ Pour le PDF final, il est utile de présenter aussi :
 - [x] Générer les graphiques: `results/latency_boxplot.png`, `results/completion_rates.png`
 - [x] Exporter les résultats en JSON pour le rapport: `results/analysis.json`
 - [ ] Créer un rapport HTML interactif (optionnel): `results/dashboard.html`
-- [ ] Valider que toutes les données nécessaires au rapport sont prêtes
+- [ ] Valider que toutes les données nécessaires au rapport sont prêtes, y compris les mesures de ressources
+
+**Priorite actuelle :** finaliser la validation des mesures de ressources et verifier que l'analyse compare les frameworks par categorie de tache, pas seulement en global.
 
 ---
 
@@ -1094,10 +1207,11 @@ Le PDF final doit reprendre un plan clair et académique, par exemple :
 
 ## 10. Recommandations pratiques
 
-- Commencer par un mode mock pour valider la chaîne complète avant de brancher de vraies API.
+- Commencer par un mode mock pour valider la chaîne complète, puis basculer sur un modèle local unique avant toute comparaison finale.
 - Tester chaque adaptateur séparément avant de lancer le benchmark complet.
 - Garder une structure de logs lisible et horodatée.
 - Fixer les paramètres expérimentaux une seule fois avant les mesures finales.
+- Mesurer séparément la latence et la consommation de ressources pour éviter de mélanger les deux notions.
 - Documenter toute différence entre la théorie et l'implémentation.
 
 ## 11. Livrables attendus
@@ -1117,4 +1231,4 @@ Le PDF doit être généré à partir d'un document source propre et cohérent, 
 
 ## 12. Conclusion
 
-Ce guide donne une trajectoire complète pour réaliser le projet, depuis la préparation de l'environnement jusqu'à l'analyse finale. Il sert de base pour intégrer les API des agents, standardiser les exécutions et conserver une traçabilité suffisante pour un travail académique reproductible.
+Ce guide donne une trajectoire complète pour réaliser le projet, depuis la préparation de l'environnement jusqu'à l'analyse finale. Il sert de base pour intégrer les backends des agents, standardiser les exécutions et conserver une traçabilité suffisante pour un travail académique reproductible.

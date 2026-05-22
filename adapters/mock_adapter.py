@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from .base_adapter import AgentAdapter
+from .local_backend import localize_prompt
 
 
 class MockAdapter(AgentAdapter):
@@ -11,7 +12,7 @@ class MockAdapter(AgentAdapter):
 
     def run(self, task: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
         started = self._start_timer()
-        prompt = str(task.get("prompt", ""))
+        prompt = localize_prompt(str(task.get("prompt", "")))
         response = f"[MOCK] Execution simulee pour {task.get('id')}"
         return self._build_result(
             task=task,
@@ -19,4 +20,5 @@ class MockAdapter(AgentAdapter):
             response=response,
             started_at=started,
             metadata={"mode": config.get("mode", "mock")},
+            token_metrics={},
         )
