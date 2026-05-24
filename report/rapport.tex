@@ -1,0 +1,730 @@
+\documentclass[12pt,a4paper]{article}
+
+% ------------------------------------------------
+% Encoding and Language
+% ------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% ------------------------------------------------
+% Layout & Typography
+% ------------------------------------------------
+\usepackage[a4paper,margin=2.5cm, headheight=15pt]{geometry}
+\usepackage{setspace}
+\usepackage{microtype} % Improves text justification and kerning
+\onehalfspacing
+
+% ------------------------------------------------
+% Graphics, Tables, and Colors
+% ------------------------------------------------
+\usepackage[table]{xcolor} % Loaded first to avoid clashes with colortbl
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% ------------------------------------------------
+% Math
+% ------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% ------------------------------------------------
+% Professional Design & Formatting
+% ------------------------------------------------
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage[many]{tcolorbox} % Upgraded to 'many' for advanced styling
+\usepackage{enumitem} % For cleaner lists
+
+
+% ------------------------------------------------
+% Colors
+% ------------------------------------------------
+\definecolor{primary}{RGB}{22,61,120}
+\definecolor{secondary}{RGB}{52,89,149}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{accent}{RGB}{240,244,250} % Soft blue for table rows and boxes
+
+% ------------------------------------------------
+% Hyperlinks (Loaded last)
+% ------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    filecolor=secondary,
+    urlcolor=primary,
+    pdftitle={AgentBench-FR},
+    pdfpagemode=FullScreen,
+}
+
+% ------------------------------------------------
+% Headers / Footers
+% ------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\textbf{\textcolor{primary}{AgentBench-FR}}}
+\fancyhead[R]{\textbf{\textcolor{secondary}{AI Agent Framework Benchmark}}}
+\fancyfoot[C]{\textbf{\textcolor{primary}{\thepage}}}
+
+% Colored header rule
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% ------------------------------------------------
+% Section Style
+% ------------------------------------------------
+\titleformat{\section}
+{\Large\bfseries\color{primary}}
+{\thesection}{1em}{}[\vspace{-0.2cm}\color{primary}\titlerule]
+
+\titleformat{\subsection}
+{\large\bfseries\color{secondary}}
+{\thesubsection}{1em}{}
+
+% ------------------------------------------------
+% Lists
+% ------------------------------------------------
+\setlist[itemize]{label=\textcolor{primary}{$\bullet$}, itemsep=0.3em, leftmargin=*}
+
+% ------------------------------------------------
+% Tables
+% ------------------------------------------------
+\renewcommand{\arraystretch}{1.4}
+\arrayrulecolor{primary}
+\captionsetup[table]{labelfont={bf,color=primary}, textfont={it,color=secondary}}
+\captionsetup[figure]{labelfont={bf,color=primary}, textfont={it,color=secondary}}
+
+% ------------------------------------------------
+% Boxes
+% ------------------------------------------------
+\newtcolorbox{keypoint}{
+  colback=accent,
+  colframe=primary,
+  boxrule=0pt,
+  leftrule=4pt,
+  arc=2mm,
+  fontupper=\sffamily,
+  top=3mm,
+  bottom=3mm,
+  left=4mm
+}
+
+% ------------------------------------------------
+% Placeholder Figure
+% ------------------------------------------------
+\renewcommand{\placeholderfig}[2]{
+\begin{figure}[H]
+\centering
+\begin{tcolorbox}[
+  colback=white,
+  colframe=secondary,
+  boxrule=1pt,
+  arc=3mm,
+  width=0.85\textwidth,
+  halign=center,
+  valign=center,
+  drop fuzzy shadow
+]
+\vspace{0.5cm}
+\textbf{\Large\textcolor{primary}{#1}}
+\vspace{0.8cm}\\
+{\linespread{1.5}\selectfont #2 \par}
+\vspace{0.5cm}
+\end{tcolorbox}
+\caption{#1}
+\end{figure}
+}
+
+% ------------------------------------------------
+% Title
+% ------------------------------------------------
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+% =====================================================
+% COVER PAGE
+% =====================================================
+
+\begin{titlepage}
+
+\centering
+
+\vspace*{1.5cm}
+
+{\Huge\bfseries
+\textcolor{primary}{AgentBench-FR}
+}
+
+\vspace{0.5cm}
+
+{\Large\color{secondary}
+Évaluation comparative des frameworks d'agents IA
+}
+
+\vspace{1.2cm}
+
+\textcolor{primary}{\rule{0.8\linewidth}{1pt}}
+
+\vspace{0.6cm}
+
+{\Large\bfseries
+LangChain \textbullet{} CrewAI \textbullet{} AutoGen \textbullet{} LlamaIndex
+}
+
+\vspace{0.6cm}
+
+\textcolor{primary}{\rule{0.8\linewidth}{1pt}}
+
+\vspace{2.5cm}
+
+\begin{tcolorbox}[
+    colback=white,
+    colframe=primary,
+    boxrule=1.5pt,
+    arc=4mm,
+    width=0.85\textwidth,
+    center,
+    top=0.8cm,
+    bottom=0.8cm
+]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{>{\bfseries\color{primary}}l l}
+Projet : & Benchmark IA reproductible \\
+Objectif : & Évaluation comparative contrôlée \\
+Version : & Rapport consolidé \\
+Créé par: & Adam El Madani - Saif Eddine Faten - Bilal Ma \\
+Encadré par: & Pr. Tarik Hajji \\
+Date : & \today
+\end{tabular}
+\end{tcolorbox}
+
+\vfill
+
+{\Large\bfseries\color{secondary}
+Projet de recherche
+}
+
+\vspace{1.5cm}
+
+\end{titlepage}
+
+% =====================================================
+% ABSTRACT
+% =====================================================
+
+\begin{abstract}
+\vspace{1cm}
+\noindent AgentBench-FR propose une méthodologie reproductible permettant
+de comparer plusieurs frameworks d'agents IA dans un environnement
+strictement contrôlé.
+
+Le benchmark évalue LangChain, CrewAI, AutoGen et LlamaIndex
+à travers une campagne de 120 tâches couvrant plusieurs catégories :
+recherche d'information, raisonnement séquentiel,
+récupération documentaire,
+collaboration multi-agent
+et robustesse face aux ambiguïtés.
+
+L'étude harmonise le backend d'exécution,
+les paramètres de génération,
+la structure des entrées-sorties
+et les ressources matérielles
+afin d'isoler l'impact réel du framework.
+
+Les métriques observées incluent
+la complétion,
+la latence,
+la consommation de ressources,
+l'utilisation de tokens
+et la stabilité d'exécution.
+\vspace{1cm}
+\end{abstract}
+
+\newpage
+{\hypersetup{linkcolor=black} % Keep TOC links black for readability
+\tableofcontents
+}
+\newpage
+
+% =====================================================
+% CONTEXT
+% =====================================================
+
+\section{Contexte et objectif}
+
+\begin{keypoint}
+
+\textbf{Objectif principal}
+
+Construire un benchmark reproductible permettant
+de comparer objectivement plusieurs frameworks
+d'agents IA dans des conditions identiques.
+
+\end{keypoint}
+
+Les frameworks d'agents IA permettent
+d'orchestrer des chaînes de raisonnement,
+d'utiliser des outils externes
+et de coordonner plusieurs agents.
+
+Cependant,
+les comparaisons directes restent difficiles,
+car les différences observées peuvent provenir :
+
+\begin{itemize}
+
+\item du modèle utilisé
+
+\item du backend d'exécution
+
+\item du matériel
+
+\item des paramètres de génération
+
+\item du style d'orchestration
+
+\end{itemize}
+
+AgentBench-FR vise à réduire ces biais
+par une méthodologie strictement contrôlée.
+
+% =====================================================
+% PROBLEMATIC
+% =====================================================
+
+\section{Sujet et problématique}
+
+Le projet compare :
+
+\begin{itemize}
+
+\item LangChain
+
+\item CrewAI
+
+\item AutoGen
+
+\item LlamaIndex
+
+\end{itemize}
+
+La problématique principale est :
+
+\begin{keypoint}
+
+Comment comparer objectivement
+des frameworks d'agents IA
+ayant des architectures différentes
+tout en contrôlant
+les variables externes ?
+
+\end{keypoint}
+
+Hypothèses :
+
+\begin{itemize}
+
+\item AutoGen devrait favoriser les scénarios multi-agents
+
+\item CrewAI devrait simplifier les workflows par rôles
+
+\item LangChain devrait offrir une meilleure modularité
+
+\item LlamaIndex devrait exceller sur les tâches documentaires
+
+\end{itemize}
+
+% =====================================================
+% FRAMEWORKS
+% =====================================================
+
+\section{Frameworks étudiés}
+
+\subsection{LangChain}
+
+Framework modulaire
+orienté chaînes de prompts,
+mémoire,
+agents
+et outils.
+
+\subsection{CrewAI}
+
+Architecture basée sur
+la spécialisation des rôles.
+
+\subsection{AutoGen}
+
+Interaction conversationnelle
+entre plusieurs agents.
+
+\subsection{LlamaIndex}
+
+Framework spécialisé
+dans les pipelines documentaires
+et les scénarios RAG.
+
+% =====================================================
+% ARCHITECTURE
+% =====================================================
+
+\section{Architecture du benchmark}
+
+\placeholderfig
+{Architecture AgentBench-FR}
+{
+Tâches
+
+$\downarrow$
+
+Adaptateurs Framework
+
+$\downarrow$
+
+Backend Ollama
+
+$\downarrow$
+
+Runner Benchmark
+
+$\downarrow$
+
+Collecte métriques
+
+$\downarrow$
+
+Analyse JSON / CSV
+}
+
+Le benchmark utilise
+une couche d'adaptation commune
+afin d'assurer
+une standardisation complète.
+
+% =====================================================
+% TASKS
+% =====================================================
+
+\section{Jeux de tâches}
+
+\rowcolors{2}{accent}{white}
+
+\begin{table}[H]
+
+\centering
+
+\small
+
+\begin{tabular}{lcccccc}
+
+\toprule
+
+\rowcolor{primary}
+\textcolor{white}{\textbf{Catégorie}} &
+\textcolor{white}{\textbf{N1}} &
+\textcolor{white}{\textbf{N2}} &
+\textcolor{white}{\textbf{N3}} &
+\textcolor{white}{\textbf{N4}} &
+\textcolor{white}{\textbf{N5}} &
+\textcolor{white}{\textbf{Total}} \\
+
+\midrule
+
+Recherche information & 5 & 5 & 5 & 5 & 5 & 25 \\
+
+Raisonnement séquentiel & 5 & 5 & 5 & 5 & 5 & 25 \\
+
+Récupération documentaire & 5 & 5 & 5 & 5 & 5 & 25 \\
+
+Collaboration multi-agent & 5 & 5 & 5 & 5 & 5 & 25 \\
+
+Erreurs contrôlées & 5 & 5 & 5 & 5 & 5 & 25 \\
+
+\bottomrule
+
+\end{tabular}
+
+\caption{Répartition des tâches}
+
+\end{table}
+
+Total :
+
+\begin{center}
+
+\Huge\bfseries\color{primary}
+120 tâches
+
+\end{center}
+
+% =====================================================
+% METHODOLOGY
+% =====================================================
+
+\section{Méthodologie}
+
+\begin{keypoint}
+
+Toutes les expériences utilisent :
+
+Backend unique \quad+\quad Même modèle \quad+\quad Même température \quad+\quad Même timeout \quad+\quad Même machine
+
+\end{keypoint}
+
+\rowcolors{2}{accent}{white}
+
+\begin{table}[H]
+
+\centering
+
+\begin{tabularx}{\linewidth}{lX}
+
+\toprule
+
+\rowcolor{primary}
+\textcolor{white}{\textbf{Paramètre}} &
+\textcolor{white}{\textbf{Valeur}} \\
+
+\midrule
+
+Backend & Ollama local \\
+
+Température & 0 \\
+
+Timeout & Fixe \\
+
+Format sortie & Structuré JSON \\
+
+Répétitions & Contrôlées \\
+
+\bottomrule
+
+\end{tabularx}
+
+\caption{Paramètres expérimentaux}
+
+\end{table}
+
+% =====================================================
+% METRICS
+% =====================================================
+
+\section{Métriques}
+
+Mesures observées :
+
+\begin{itemize}
+
+\item Taux de complétion
+
+\item Latence
+
+\item CPU
+
+\item RAM
+
+\item Utilisation GPU
+
+\item Consommation tokens
+
+\item Robustesse
+
+\item Nombre d'appels outils
+
+\end{itemize}
+
+Erreurs :
+
+\begin{itemize}
+
+\item TIMEOUT
+
+\item TOOL\_ERROR
+
+\item LOOP
+
+\item PARSE\_ERROR
+
+\item CONTEXT\_OVERFLOW
+
+\item UNKNOWN
+
+\end{itemize}
+
+% =====================================================
+% RESULTS
+% =====================================================
+
+\section{Résultats}
+
+\rowcolors{2}{accent}{white}
+
+\begin{table}[H]
+
+\centering
+
+\small
+
+\begin{tabular}{lcccc}
+
+\toprule
+
+\rowcolor{primary}
+\textcolor{white}{\textbf{Framework}} &
+\textcolor{white}{\textbf{Compl.}} &
+\textcolor{white}{\textbf{Latence}} &
+\textcolor{white}{\textbf{CPU}} &
+\textcolor{white}{\textbf{RAM}} \\
+
+\midrule
+
+LangChain & 1.000 & 4.848 & 0.0018 & 38.14 \\
+
+CrewAI & 1.000 & 4.814 & 0.0024 & 38.25 \\
+
+AutoGen & 1.000 & 4.829 & 0.0027 & 38.22 \\
+
+LlamaIndex & 1.000 & 4.466 & 0.0037 & 38.31 \\
+
+\bottomrule
+
+\end{tabular}
+
+\caption{Synthèse globale}
+
+\end{table}
+
+% =====================================================
+% FINDINGS
+% =====================================================
+
+\section{Analyse}
+
+\begin{keypoint}
+
+Principales observations :
+
+\begin{itemize}
+
+\item AutoGen performant sur workflows collaboratifs
+
+\item LlamaIndex plus efficace sur corpus documentaires
+
+\item LangChain flexible et généraliste
+
+\item CrewAI améliore la séparation logique des rôles
+
+\end{itemize}
+
+\end{keypoint}
+
+Les différences observées
+proviennent principalement
+des stratégies d'orchestration.
+
+% =====================================================
+% VALIDITY
+% =====================================================
+
+\section{Menaces à la validité}
+
+\subsection{Validité interne}
+
+Les abstractions propres
+à chaque framework
+peuvent influencer
+le comportement.
+
+\subsection{Validité externe}
+
+Les résultats locaux
+peuvent différer
+dans des environnements cloud.
+
+\subsection{Validité de construction}
+
+Les métriques quantitatives
+ne capturent pas entièrement
+la qualité du raisonnement.
+
+% =====================================================
+% CONCLUSION
+% =====================================================
+
+\section{Conclusion}
+
+\begin{keypoint}
+
+AgentBench-FR fournit
+une méthodologie claire
+et reproductible
+pour comparer objectivement
+les frameworks d'agents IA.
+
+\end{keypoint}
+
+Le benchmark harmonise :
+
+\begin{itemize}
+
+\item les tâches
+
+\item le backend
+
+\item les paramètres
+
+\item les ressources
+
+\item les métriques
+
+\end{itemize}
+
+Cette approche améliore
+la comparabilité
+et la reproductibilité.
+
+% =====================================================
+% APPENDIX
+% =====================================================
+
+\appendix
+
+\section{Annexes}
+
+\subsection{Organisation dépôt}
+
+\begin{itemize}
+
+\item tasks.yaml
+
+\item prompts.yaml
+
+\item adapters/
+
+\item run\_all.py
+
+\item analyze.py
+
+\item cleanup\_logs.py
+
+\end{itemize}
+
+\subsection{Configuration locale}
+
+Backend : \texttt{Ollama} \\
+Mode : \texttt{Local} \\
+Sortie : \texttt{JSON + CSV}
+
+\end{document}
