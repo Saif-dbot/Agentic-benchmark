@@ -1,4 +1,5 @@
-Sujet 1 — Évaluation comparative des frameworks d'agents
+# Sujet 1 — Évaluation comparative des frameworks d'agents
+
 IA : LangChain, CrewAI, AutoGen et LlamaIndex
 
 Problématique
@@ -10,7 +11,7 @@ plus adapté à leur contexte applicatif. Cette recherche vise à combler ce vid
 méthodologie d'évaluation systématique couvrant la latence, la fiabilité, la complétude des tâches
 et la consommation de ressources.
 Mots-clés
-Agent benchmarking, Tool calling, ReAct pattern, LangGraph, CrewAI, AutoGen, LlamaIndex,
+Agent benchmarking, Tool calling, ReAct pattern, LangChain, CrewAI, AutoGen, LlamaIndex,
 orchestration
 Abstract
 The proliferation of agentic AI frameworks has created an urgent need for rigorous
@@ -22,7 +23,7 @@ suite comprising 120 tasks across five difficulty levels, and measure framework
 performance along four dimensions: task completion rate, average latency, resource
 consumption, and error resilience. Our results reveal significant performance disparities:
 AutoGen achieves the highest completion rate on multi-agent tasks (83.4%) while
-LangGraph demonstrates superior latency in single-agent pipelines. We further analyze
+LangChain demonstrates superior latency in single-agent pipelines. We further analyze
 failure modes and propose architectural guidelines for selecting the appropriate framework
 
 Sujets de recherche IA Agentique — Page 2

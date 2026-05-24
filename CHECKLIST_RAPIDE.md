@@ -13,10 +13,10 @@ Les tâches à accomplir pour générer les données et les résultats du benchm
 - [x] Créer et activer l'environnement Python `.venv`
 - [x] Installer les dépendances (`pip install -r requirements.txt`)
 - [x] Créer le fichier local `config.json` (non versionné)
-- [ ] Configurer les variables d'environnement pour les clés API
-- [ ] Tester la connexion au fournisseur LLM
+- [ ] Configurer le backend local Ollama et le modèle de référence
+- [ ] Tester la réponse locale sur une tâche de référence
 
-Statut au 2026-05-20 : `config.json` créé, chargeur de config validé. Il reste à injecter la clé API pour les appels réels.
+Statut au 2026-05-20 : `config.json` créé, chargeur de config validé. Il reste à valider la réponse locale du modèle de référence.
 
 ### Phase 2 : Structure des adaptateurs
 

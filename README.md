@@ -19,7 +19,8 @@ Comparer de manière systématique plusieurs frameworks d'agents IA, notamment L
 - [config_example.json](config_example.json) : exemple de configuration pour un adaptateur LLM.
 - [requirements.txt](requirements.txt) : dépendances Python.
 - [run_all.py](run_all.py) : point d'entrée d'exécution du benchmark.
-- [combined_for_pdf.tex](combined_for_pdf.tex) : export LaTeX pour la synthèse ou le rapport.
+- [report/AgentBench-FR.tex](report/AgentBench-FR.tex) : squelette du rapport final.
+- [report/tasks_appendix.tex](report/tasks_appendix.tex) : annexe LaTeX générée depuis `tasks.yaml`.
 
 ## Traçabilité
 
@@ -52,7 +53,7 @@ Mode mock, sans appel à une API externe :
 python run_all.py
 ```
 
-Si le script attend une configuration spécifique, copier `config_example.json` vers `config.json` puis compléter les paramètres du fournisseur LLM choisi.
+Si le script attend une configuration spécifique, copier `config_example.json` vers `config.json` puis compléter les paramètres du backend local Ollama choisi.
 
 ## Organisation des résultats
 

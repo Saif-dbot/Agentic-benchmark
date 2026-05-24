@@ -68,7 +68,7 @@ Le benchmark sera organisé en cinq catégories de tâches :
 
 ### 6.2 Nombre de tâches
 
-Pour assurer un bon équilibre entre profondeur d’analyse et faisabilité, il est recommandé de constituer un ensemble de 25 à 50 tâches au total, réparties de manière équilibrée entre les catégories ci-dessus.
+Pour assurer un bon équilibre entre profondeur d’analyse et faisabilité, le benchmark retenu comporte 120 tâches au total, réparties de manière équilibrée entre les cinq catégories et les cinq niveaux de difficulté.
 
 ## 7. Variables expérimentales
 
